@@ -1,5 +1,13 @@
+import Header from '../components/Header/Header';
+import Content from '../components/Content/Content';
+
 function Profile() {
-  return <h1>Страница не найдена</h1>;
+  return (
+    <>
+      <Header />
+      <Content></Content>
+    </>
+  );
 }
 
 export default Profile;

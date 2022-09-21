@@ -8,50 +8,40 @@ import Login from '../../routes/Login';
 import Register from '../../routes/Register';
 import PageNotFound from '../../routes/PageNotFound';
 
-import Header from '../Header/Header';
-import Content from '../Content/Content';
-import Footer from '../Footer/Footer';
-
 import './App.css';
 
 function App() {
   return (
     <div className="app">
-      <Header />
+      <Switch>
+        <Route path="/" exact>
+          <Main />
+        </Route>
 
-      <Content>
-        <Switch>
-          <Route path="/">
-            <Main />
-          </Route>
+        <Route path="/movies">
+          <Movies />
+        </Route>
 
-          <Route path="/movies">
-            <Movies />
-          </Route>
+        <Route path="/saved-movies">
+          <SavedMovies />
+        </Route>
 
-          <Route path="/saved-movies">
-            <SavedMovies />
-          </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
 
-          <Route path="/profile">
-            <Profile />
-          </Route>
+        <Route path="/signup">
+          <Register />
+        </Route>
 
-          <Route path="/signup">
-            <Register />
-          </Route>
+        <Route path="/signin">
+          <Login />
+        </Route>
 
-          <Route path="/signin">
-            <Login />
-          </Route>
-
-          <Route path="*">
-            <PageNotFound />
-          </Route>
-        </Switch>
-      </Content>
-
-      <Footer />
+        <Route path="*">
+          <PageNotFound />
+        </Route>
+      </Switch>
     </div>
   );
 }

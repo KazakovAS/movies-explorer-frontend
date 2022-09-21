@@ -1,7 +1,16 @@
 import './Footer.css';
 
 function Footer() {
-  return <h1>Страница не найдена</h1>;
+  return (
+    <footer className="footer">
+      <p className="footer__description">
+        Учебный проект Яндекс.Практикум х BeatFilm.
+      </p>
+      <div className="">
+        <p className="footer__copy">&copy; 2020</p>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;

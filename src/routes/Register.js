@@ -1,5 +1,11 @@
+import Content from '../components/Content/Content';
+
 function Register() {
-  return <h1>Страница не найдена</h1>;
+  return (
+    <>
+      <Content></Content>
+    </>
+  );
 }
 
 export default Register;
