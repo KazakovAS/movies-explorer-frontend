@@ -1,0 +1,35 @@
+.nav-tab {
+  background-color: #F5F5F5;
+}
+
+.nav-tab__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style-type: none;
+  padding: 25px 50px;
+  margin-top: 0;
+  margin-bottom: 0;
+  gap: 12px 24px;
+}
+
+.nav-tab__item {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.nav-tab__link {
+  color: inherit;
+}
+
+@media (min-width: 768px) {
+  .nav-tab__list {
+    gap: 20px 40px;
+  }
+
+  .nav-tab__item {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}

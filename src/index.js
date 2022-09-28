@@ -4,7 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './vendor/normalize';
 import './vendor/fonts/fonts.css';
-import './variables/variables.css';
+import './Shared/variables.css';
+import './Shared/overflow.css';
 
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';

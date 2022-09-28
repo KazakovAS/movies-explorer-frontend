@@ -35,14 +35,6 @@
 }
 
 @media (min-width: 768px) {
-  .not-found {
-    max-height: 398px;
-    margin-top: auto;
-    margin-bottom: auto;
-    padding-top: 295px;
-    padding-bottom: 107px;
-  }
-
   .not-found__title {
     font-size: 140px;
     line-height: 169px;
@@ -56,15 +48,14 @@
 
   .not-found__prev {
     position: static;
-    margin-top: auto;
     font-size: 14px;
     line-height: 17px;
+    margin-top: 208px;
   }
 }
 
 @media (min-width: 1280px) {
-  .not-found {
-    padding-top: 247px;
-    padding-bottom: 60px;
+  .not-found__prev {
+    position: absolute;
   }
 }

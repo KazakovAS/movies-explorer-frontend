@@ -1,0 +1,134 @@
+.about-project {
+  margin-top: 70px;
+}
+
+.about-project__wrapper {
+  max-width: 284px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-project__content {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  margin-top: 60px;
+}
+
+.about-project__title {
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.04em;
+  color: #000000;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.about-project__text {
+  font-size: 11px;
+  line-height: 16px;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.program {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 60px;
+  margin-bottom: 0;
+}
+
+.program__time {
+  background-color: #F2F2F2;
+  padding: 11px;
+}
+
+.program__time_green {
+  background-color: #2BE080;
+}
+
+.program__technology {
+  color: #A0A0A0;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .about-project {
+    margin-top: 90px;
+  }
+
+  .about-project__wrapper {
+    max-width: 668px;
+  }
+
+  .about-project__content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 70px;
+  }
+
+  .about-project__item {
+    width: calc(50% - 15px);
+  }
+
+  .about-project__title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+    margin-top: 21px;
+  }
+
+  .program {
+    grid-template-columns: 1fr 4fr;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 95px;
+  }
+
+  .program__time {
+    padding: 9px;
+  }
+
+  .program__technology {
+    margin-top: 15px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .about-project {
+    margin-top: 110px;
+  }
+
+  .about-project__wrapper {
+    max-width: 1140px;
+  }
+
+  .about-project__content {
+    gap: 40px;
+  }
+
+  .about-project__item {
+    width: calc(50% - 20px);
+  }
+
+  .about-project__text {
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 26px;
+  }
+
+  .program {
+    margin-top: 110px;
+  }
+}
