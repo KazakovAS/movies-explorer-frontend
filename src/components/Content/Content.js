@@ -1,7 +1,7 @@
 import './Content.css';
 
-function Content({ children, ...props }) {
-  return <main {...props}>{children}</main>;
+function Content({ children }) {
+  return <main className="content">{children}</main>;
 }
 
 export default Content;

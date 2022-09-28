@@ -1,7 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
 
 import Main from '../../routes/Main';
-import Profile from '../../routes/Profile';
+import PageProfile from '../../routes/PageProfile';
 import Movies from '../../routes/Movies';
 import SavedMovies from '../../routes/SavedMovies';
 import Login from '../../routes/Login';
@@ -27,7 +27,7 @@ function App() {
         </Route>
 
         <Route path="/profile">
-          <Profile />
+          <PageProfile />
         </Route>
 
         <Route path="/signup">
