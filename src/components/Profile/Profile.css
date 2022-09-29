@@ -86,6 +86,7 @@
   background-color: transparent;
   border: none;
   padding: 0;
+  cursor: pointer;
 }
 
 .controls-profile__item:not(:first-child) {

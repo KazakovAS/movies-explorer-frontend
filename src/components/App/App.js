@@ -4,8 +4,8 @@ import Main from '../../routes/Main';
 import PageProfile from '../../routes/PageProfile';
 import Movies from '../../routes/Movies';
 import SavedMovies from '../../routes/SavedMovies';
-import Login from '../../routes/Login';
-import Register from '../../routes/Register';
+import PageLogin from '../../routes/PageLogin';
+import PageRegister from '../../routes/PageRegister';
 import PageNotFound from '../../routes/PageNotFound';
 
 import './App.css';
@@ -31,11 +31,11 @@ function App() {
         </Route>
 
         <Route path="/signup">
-          <Register />
+          <PageRegister />
         </Route>
 
         <Route path="/signin">
-          <Login />
+          <PageLogin />
         </Route>
 
         <Route path="*">
