@@ -1,15 +1,18 @@
 import Header from '../components/Header/Header';
 import Content from '../components/Content/Content';
+import SavedMovies from '../components/SavedMovies/SavedMovies';
 import Footer from '../components/Footer/Footer';
 
-function SavedMovies() {
+function PageSavedMovies() {
   return (
     <>
       <Header />
-      <Content></Content>
+      <Content>
+        <SavedMovies />
+      </Content>
       <Footer />
     </>
   );
 }
 
-export default SavedMovies;
+export default PageSavedMovies;

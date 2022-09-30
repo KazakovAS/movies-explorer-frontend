@@ -1,0 +1,22 @@
+.saved-movies__wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 292px;
+  padding-top: 158px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .saved-movies__wrapper {
+    max-width: 708px;
+    padding-top: 154px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .saved-movies__wrapper {
+    max-width: 1140px;
+    padding-top: 144px;
+  }
+}

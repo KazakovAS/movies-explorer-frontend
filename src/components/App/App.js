@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Main from '../../routes/Main';
 import PageProfile from '../../routes/PageProfile';
 import PageMovies from '../../routes/PageMovies';
-import SavedMovies from '../../routes/SavedMovies';
+import PageSavedMovies from '../../routes/PageSavedMovies';
 import PageLogin from '../../routes/PageLogin';
 import PageRegister from '../../routes/PageRegister';
 import PageNotFound from '../../routes/PageNotFound';
@@ -23,7 +23,7 @@ function App() {
         </Route>
 
         <Route path="/saved-movies">
-          <SavedMovies />
+          <PageSavedMovies />
         </Route>
 
         <Route path="/profile">
