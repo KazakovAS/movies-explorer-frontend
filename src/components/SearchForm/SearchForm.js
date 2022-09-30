@@ -1,24 +1,26 @@
-import Switcher from '../Switcher/Switcher';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+
+import './SearchForm.css';
 
 function SearchForm() {
   return (
-    <form action="" className="search-form">
-      <label className="search-form__item">
+    <form action="" className="search-form" noValidate>
+      <div className="search-form__item">
         <input
           className="search-form__field"
           type="text"
-          name="text"
+          name="movie"
           placeholder="Фильм"
           required
         />
 
         <button
-          className="button button_accent search-form__submit"
+          className="search-form__submit"
           aria-label="Найти"
         />
-      </label>
+      </div>
 
-      <Switcher />
+      <FilterCheckbox />
     </form>
   );
 }

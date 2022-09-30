@@ -1,7 +1,7 @@
 [![linting](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/linting.yml/badge.svg)](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/linting.yml)
 [![deploy](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/deploy.yml/badge.svg)](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/deploy.yml)
 
-# Movies Explorer
+# PageMovies Explorer
 
 Фронтенд SPA-приложения Movie Explorer.
 
@@ -9,7 +9,7 @@
 
 -   [Демо](https://lerush.nomoredomains.sbs).
 -   [Макет](https://www.figma.com/file/qDwSTl3buKJ24gYRk4oOzw/Diploma-(Copy)?node-id=891%3A3857).
--   [Movies Explorer Backend](https://github.com/KazakovAS/movies-explorer-api).
+-   [PageMovies Explorer Backend](https://github.com/KazakovAS/movies-explorer-api).
 
 ## Окружение и инструменты:
 
@@ -42,13 +42,12 @@
 
 | Роут        | Защищен | Описание                                                                                                                                |
 | :---------- | :------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| /users/me   | Да      | Возвращает информацию о текущем пользователе (email и имя)                                                                              |
-| /users/me   | Да      | Обновляет информацию текущего пользователя (email и имя)                                                                                |
-| /movies/:id | Да      | Удаляет сохранённый фильм по id                                                                                                         |
-| /movies     | Да      | Возвращает все сохранённые текущим пользователем фильмы                                                                                 |
-| /movies     | Да      | Создаёт фильм с переданными в теле: country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail и movieId |
-| /signup     | Нет     | Создаёт пользователя с переданными в теле: email, password и name                                                                       |
-| /signin     | Нет     | Проверяет переданные в теле почту и пароль, возвращает JWT и авторизирует пользователя                                                  |
+| /   | Нет      | Главная страница с описанием                                                                             |
+| /profile   | Да      | Личный кабинет                                                                              |
+| /saved-movies   | Да      | Сохраненные фильмы текущего пользователя                                                                              |
+| /movies | Да      | Список фильмов                                                                                                       |
+| /signup     | Нет     | Регистрация                                                                     |
+| /signin     | Нет     | Авторизация                                                 |
 
 ## Файловая структура:
 

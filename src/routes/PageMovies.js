@@ -1,18 +1,18 @@
 import Header from '../components/Header/Header';
 import Content from '../components/Content/Content';
-import SearchForm from "../components/SearchForm/SearchForm";
+import Movies from '../components/Movies/Movies';
 import Footer from '../components/Footer/Footer';
 
-function Movies() {
+function PageMovies() {
   return (
     <>
       <Header />
       <Content>
-        <SearchForm />
+        <Movies />
       </Content>
       <Footer />
     </>
   );
 }
 
-export default Movies;
+export default PageMovies;

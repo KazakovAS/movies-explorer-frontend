@@ -19,7 +19,7 @@
 @media (min-width: 768px) {
   .register {
     padding-top: 232px;
-    padding-bottom: 232px;
+    padding-bottom: 234px;
   }
 
   .register__wrapper {
@@ -29,13 +29,7 @@
 
 @media (min-width: 1280px) {
   .register {
-    padding-bottom: 234px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .register {
     padding-top: 70px;
-    padding-bottom: 98px;
+    padding-bottom: 70px;
   }
 }
