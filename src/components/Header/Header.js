@@ -7,7 +7,9 @@ import Account from "../Account/Account";
 
 import './Header.css';
 
-function Header() {
+function Header(props) {
+  const { theme } = props;
+
   const [loggedIn] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
 
@@ -41,7 +43,7 @@ function Header() {
 
   const headerLoggedIn = (
     <>
-      <nav className="navigation header-navigation">
+      <nav className={`navigation header-navigation ${ theme === 'blue' ? 'header-navigation_theme_dark' : ''}`}>
         <ul className="navigation__list header-navigation__list">
           <li className="navigation__item header-navigation__item header-navigation__item_type_accent">
             <NavLink to="/movies" className="navigation__link" activeClassName="navigation__link_active">Фильмы</NavLink>

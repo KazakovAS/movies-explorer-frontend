@@ -11,7 +11,7 @@ import Footer from '../components/Footer/Footer';
 function Main() {
   return (
     <>
-      <Header />
+      <Header theme="blue" />
       <Content>
         <Promo />
         <NavTab />

@@ -49,7 +49,7 @@
   content: '';
   width: 16px;
   height: 16px;
-  background-color: #2BE080;
+  background-color: #F9F9F9;
   border: 1px solid #FFFFFF;
   border-radius: 50%;
   transform: translateX(0);
@@ -57,7 +57,12 @@
 }
 
 .filter-checkbox__field:checked~.filter-checkbox__status::after {
-  transform: translateX(calc(100% + 2px));
+  transform: translateX(100%);
+  background-color: #2BE080;
+}
+
+.filter-checkbox__field:disabled~.filter-checkbox__status::after {
+  background-color: #A0A0A0;
 }
 
 @media (min-width: 768px) {

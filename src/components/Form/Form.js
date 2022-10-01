@@ -7,7 +7,7 @@ function Form(props) {
 
   return (
     <>
-      <form className="form" action="" noValidate>
+      <form className="form" action="">
         { children }
 
         <button className="form__submit">{ submit }</button>

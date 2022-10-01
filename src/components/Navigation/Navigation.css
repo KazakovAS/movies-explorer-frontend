@@ -1,3 +1,7 @@
+.header-navigation_theme_dark {
+  color: #ffffff;
+}
+
 .navigation__list {
   list-style-type: none;
   padding-left: 0;
@@ -5,15 +9,11 @@
   margin-bottom: 0;
 }
 
-.navigation__item {
-  color: #000000;
-}
-
 .navigation__link {
-  color: inherit;
-  text-decoration: none;
+color: inherit;
+text-decoration: none;
 }
 
 .navigation__link_active {
-  text-decoration: underline;
+text-decoration: underline;
 }
