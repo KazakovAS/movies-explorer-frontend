@@ -4,7 +4,7 @@ import './SearchForm.css';
 
 function SearchForm() {
   return (
-    <form action="" className="search-form" noValidate>
+    <form action="" className="search-form">
       <div className="search-form__item">
         <input
           className="search-form__field"

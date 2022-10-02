@@ -61,7 +61,10 @@
 .header__menu-button_open {
   width: 40px;
   height: 43px;
-  background-image: url('../../images/menu-open.svg');
+}
+
+.header__menu-button-icon_theme_dark {
+  fill: white;
 }
 
 .menu {
@@ -114,7 +117,6 @@
   position: absolute;
   width: 32px;
   height: 32px;
-  background-image: url('../../images/menu-close.svg');
   top: 13px;
   right: 13px;
 }

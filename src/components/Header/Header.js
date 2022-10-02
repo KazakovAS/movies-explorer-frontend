@@ -14,14 +14,6 @@ function Header(props) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   function openMenu() {
-    const bodyEl = document.querySelector('.root');
-
-    if (bodyEl.classList.contains('overflow')) {
-      bodyEl.classList.remove('overflow');
-    } else {
-      bodyEl.classList.add('overflow');
-    }
-
     setMenuOpen(!isMenuOpen);
   }
 
@@ -33,7 +25,18 @@ function Header(props) {
             className="menu__button menu__button_close"
             onClick={openMenu}
             type="button"
-          />
+          >
+            <svg
+              className="menu__button-button-icon"
+              width="32"
+              height="32"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <rect x="7.16016" y="9.28249" width="3" height="22" transform="rotate(-45 7.16016 9.28249)" fill="black"/>
+              <rect x="22.7168" y="7.16117" width="3" height="22" transform="rotate(45 22.7168 7.16117)" fill="black"/>
+            </svg>
+          </button>
 
           <Navigation />
         </div>
@@ -59,7 +62,19 @@ function Header(props) {
         className="header__menu-button header__menu-button_open"
         onClick={openMenu}
         type="button"
-      />
+      >
+        <svg
+          className={`header__menu-button-icon ${ theme === 'blue' ? 'header__menu-button-icon_theme_dark' : ''}`}
+          width="44"
+          height="44"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M36 14L8 14V11L36 11V14Z" />
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M36 24L8 24V21L36 21V24Z" />
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M36 34L8 34V31L36 31V34Z" />
+        </svg>
+      </button>
 
       {isMenuOpen && menu}
     </>
