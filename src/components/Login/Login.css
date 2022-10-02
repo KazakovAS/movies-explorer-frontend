@@ -1,0 +1,35 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 56px;
+  padding-bottom: 33px;
+}
+
+.login__wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .login {
+    padding-top: 232px;
+    padding-bottom: 234px;
+  }
+
+  .login__wrapper {
+    max-width:396px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .login {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+}

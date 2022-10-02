@@ -1,0 +1,33 @@
+.greeting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.greeting__logo {
+  display: block;
+  width: 38px;
+  transition: opacity 1s;
+}
+
+.greeting__logo:hover {
+  opacity: .6;
+}
+
+.greeting__header {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin-top: 50px;
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .greeting {
+    align-items: flex-start;
+  }
+
+  .greeting__header {
+    margin-top: 40px;
+  }
+}

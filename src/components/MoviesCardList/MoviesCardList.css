@@ -1,0 +1,20 @@
+.movies-card-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 90px;
+  margin-bottom: 0;
+}
+
+.movies-card-list__item:not(:first-child) {
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .movies-card-list {
+    margin-top: 120px;
+  }
+
+  .movies-card-list__item:not(:first-child) {
+    margin-top: 40px;
+  }
+}

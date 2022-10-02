@@ -1,0 +1,35 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 56px;
+  padding-bottom: 33px;
+}
+
+.register__wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .register {
+    padding-top: 232px;
+    padding-bottom: 234px;
+  }
+
+  .register__wrapper {
+    max-width:396px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .register {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+}
