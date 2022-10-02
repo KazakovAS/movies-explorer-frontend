@@ -15,6 +15,11 @@
 .filter-checkbox__item {
   cursor: pointer;
   border-radius: 20px;
+  transition: opacity 1s;
+}
+
+.filter-checkbox__item:hover {
+  opacity: .6;
 }
 
 .filter-checkbox__field {
