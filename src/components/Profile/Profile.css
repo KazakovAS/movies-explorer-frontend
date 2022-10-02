@@ -87,6 +87,11 @@
   border: none;
   padding: 0;
   cursor: pointer;
+  transition: opacity 1s;
+}
+
+.controls-profile__item:hover {
+  opacity: .6;
 }
 
 .controls-profile__item:not(:first-child) {
