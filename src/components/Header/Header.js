@@ -27,9 +27,10 @@ function Header(props) {
             type="button"
           >
             <svg
-              className="menu__button-button-icon"
+              className="menu__button-icon"
               width="32"
               height="32"
+              viewBox="0 0 32 32"
               aria-hidden="true"
               focusable="false"
             >
@@ -67,6 +68,7 @@ function Header(props) {
           className={`header__menu-button-icon ${ theme === 'blue' ? 'header__menu-button-icon_theme_dark' : ''}`}
           width="44"
           height="44"
+          viewBox="0 0 44 44"
           aria-hidden="true"
           focusable="false"
         >

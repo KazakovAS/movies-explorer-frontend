@@ -63,6 +63,11 @@
   height: 43px;
 }
 
+.header__menu-button-icon,
+.menu__button-icon {
+  width: 100%;
+}
+
 .header__menu-button-icon_theme_dark {
   fill: white;
 }
