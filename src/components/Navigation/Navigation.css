@@ -10,10 +10,15 @@
 }
 
 .navigation__link {
-color: inherit;
-text-decoration: none;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 1s;
+}
+
+.navigation__link:hover {
+  opacity: .6;
 }
 
 .navigation__link_active {
-text-decoration: underline;
+  text-decoration: underline;
 }

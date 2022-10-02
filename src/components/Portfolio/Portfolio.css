@@ -43,6 +43,11 @@
   color: #000000;
   text-decoration: none;
   padding-right: 5px;
+  transition: opacity 1s;
+}
+
+.portfolio__item-link:hover {
+  opacity: .6;
 }
 
 .portfolio__item-link::after {

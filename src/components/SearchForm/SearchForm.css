@@ -42,6 +42,11 @@
   border-radius: 50%;
   padding: 6px;
   border: none;
+  transition: opacity 1s;
+}
+
+.search-form__submit:hover {
+  opacity: .6;
 }
 
 .search-form__submit::after {

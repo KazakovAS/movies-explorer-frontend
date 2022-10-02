@@ -39,7 +39,13 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  cursor: pointer;
   padding: 0;
+  transition: opacity 1s;
+}
+
+.movies-card__button:hover {
+  opacity: .6;
 }
 
 .movies-card__button_type_default {

@@ -23,6 +23,10 @@
   margin-right: auto;
 }
 
+.movies__add-more:hover {
+  outline: 1px solid #000000;
+}
+
 @media (min-width: 768px) {
   .movies__wrapper {
     max-width: 708px;

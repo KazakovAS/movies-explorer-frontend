@@ -32,6 +32,11 @@
   font-size: 12px;
   line-height: 15px;
   text-decoration: none;
+  transition: opacity 1s;
+}
+
+.not-found__prev:hover {
+  opacity: .6;
 }
 
 @media (min-width: 768px) {

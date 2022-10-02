@@ -20,6 +20,11 @@
   flex-shrink: 0;
   display: block;
   width: 38px;
+  transition: opacity 1s;
+}
+
+.header__logo:hover {
+  opacity: .6;
 }
 
 .header__auth {
@@ -33,6 +38,11 @@
   line-height: 16px;
   color: #FFFFFF;
   text-decoration: none;
+  transition: opacity 1s;
+}
+
+.header__auth-link:hover {
+  opacity: .6;
 }
 
 .header__auth-link:not(:first-child) {

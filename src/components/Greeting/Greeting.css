@@ -7,6 +7,11 @@
 .greeting__logo {
   display: block;
   width: 38px;
+  transition: opacity 1s;
+}
+
+.greeting__logo:hover {
+  opacity: .6;
 }
 
 .greeting__header {

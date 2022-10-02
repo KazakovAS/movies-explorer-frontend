@@ -21,6 +21,11 @@
 
 .nav-tab__link {
   color: inherit;
+  transition: opacity 1s;
+}
+
+.nav-tab__link:hover {
+  opacity: .6;
 }
 
 @media (min-width: 768px) {
