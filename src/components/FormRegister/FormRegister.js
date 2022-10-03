@@ -9,6 +9,7 @@ function FormRegister() {
   function handleRegisterSubmit(name, email, password) {
     auth.register(name, email, password)
       .then(res => {
+        console.log(1)
         if (res.statusCode !== 400) {
           // setRequestCompleted(true);
           // setTooltipPopupOpen(true);
@@ -21,6 +22,7 @@ function FormRegister() {
       .catch(() => {
         // setRequestCompleted(false);
         // setTooltipPopupOpen(true);
+        console.error();
       });
   }
 

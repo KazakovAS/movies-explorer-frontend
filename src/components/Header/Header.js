@@ -12,7 +12,8 @@ function Header(props) {
   const { theme } = props;
 
   const [ isMenuOpen, setMenuOpen ] = useState(false);
-  const loggedIn = useContext(AuthContext);
+  // const loggedIn = useContext(AuthContext);
+  const loggedIn = false;
 
   function openMenu() {
     setMenuOpen(!isMenuOpen);
@@ -85,7 +86,7 @@ function Header(props) {
 
   const headerNotLogged = (
     <div className="header__auth">
-      <Link to="/signup" className="header__auth-link">
+      <Link to="/signup" className={`header__auth-link ${ theme === 'blue' ? 'header__auth-link_theme_dark' : ''}`}>
         Регистрация
       </Link>
       <Link to="/signin" className="header__auth-link header__auth-link_type_button">
