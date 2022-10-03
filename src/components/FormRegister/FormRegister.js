@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import Form from '../Form/Form';
 import auth from '../../utils/auth';
 
@@ -6,7 +8,12 @@ function FormRegister() {
   const cta = 'Уже зарегистрированы?';
   const link = { url: '/signin', text: 'Войти' };
 
-  function handleRegisterSubmit(name, email, password) {
+  const inputNameRef = useRef();
+  const inputEmailRef = useRef();
+  const inputPasswordRef = useRef();
+
+
+  function register({ name, email, password }) {
     auth.register(name, email, password)
       .then(res => {
         console.log(1)
@@ -26,6 +33,16 @@ function FormRegister() {
       });
   }
 
+  function handleRegisterSubmit(e) {
+    e.preventDefault();
+
+    register({
+        name: inputNameRef.current.value,
+        email: inputEmailRef.current.value,
+        password: inputPasswordRef.current.value,
+    });
+  }
+
   return (
     <Form
       onSubmit={handleRegisterSubmit}
@@ -35,17 +52,35 @@ function FormRegister() {
     >
       <label className="form__item">
         <span className="form__label">Имя</span>
-        <input className="form__field" type="text" name="name" required />
+        <input
+          className="form__field"
+          type="text"
+          name="name"
+          ref={inputNameRef}
+          required
+        />
         <span className="form__field-error"></span>
       </label>
       <label className="form__item">
         <span className="form__label">E-mail</span>
-        <input className="form__field form__field_type_error" type="email" name="email" required />
+        <input
+          className="form__field form__field_type_error"
+          type="email"
+          name="email"
+          ref={inputEmailRef}
+          required
+        />
         <span className="form__field-error">Что-то пошло не так...</span>
       </label>
       <label className="form__item">
         <span className="form__label">Пароль</span>
-        <input className="form__field form__field_type_error" type="password" name="password" required />
+        <input
+          className="form__field form__field_type_error"
+          type="password"
+          name="password"
+          ref={inputPasswordRef}
+          required
+        />
         <span className="form__field-error">Что-то пошло не так...</span>
       </label>
     </Form>
