@@ -1,7 +1,7 @@
 [![linting](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/linting.yml/badge.svg)](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/linting.yml)
 [![deploy](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/deploy.yml/badge.svg)](https://github.com/KazakovAS/movies-explorer-frontend/actions/workflows/deploy.yml)
 
-# PageMovies Explorer
+# Movies Explorer
 
 Фронтенд SPA-приложения Movie Explorer.
 
@@ -9,7 +9,7 @@
 
 -   [Демо](https://lerush.nomoredomains.sbs).
 -   [Макет](https://www.figma.com/file/qDwSTl3buKJ24gYRk4oOzw/Diploma-(Copy)?node-id=891%3A3857).
--   [PageMovies Explorer Backend](https://github.com/KazakovAS/movies-explorer-api).
+-   [Movies Explorer Backend](https://github.com/KazakovAS/movies-explorer-api).
 
 ## Окружение и инструменты:
 
