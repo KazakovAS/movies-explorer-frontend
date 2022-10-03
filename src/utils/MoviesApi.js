@@ -1,23 +1,19 @@
-import Api from "./Api.js";
-import { URL_PROTOCOL, MOVIES_DOMAIN } from './constants';
+import Api from './Api.js';
+import { MOVIES_API } from './constants';
 
 class MoviesApi extends Api {
-  constructor(domain) {
+  constructor(api) {
     super();
 
-    this._domain = domain;
+    this._api = api;
   }
 
   getMovies() {
-    return fetch(`${URL_PROTOCOL}://${this._domain}/beatfilm-movies`, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })
+    return fetch(`${this._api}`)
       .then(res => super._handleError(res))
   }
 }
 
-const mainApi = new MoviesApi(MOVIES_DOMAIN);
+const mainApi = new MoviesApi(MOVIES_API);
 
 export default mainApi;

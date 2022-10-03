@@ -1,89 +1,92 @@
-import Api from "./Api.js";
-import { MAIN_DOMAIN } from './constants';
+import Api from './Api.js';
+import { MAIN_API } from './constants';
 
 class MainApi extends Api {
-  constructor(domain) {
+  constructor(api) {
     super();
 
-    this._domain = domain;
+    this._api = api;
   }
 
-  // getProfile(token) {
-  //   return fetch(`https://${this._domain}/users/me`, {
-  //     headers: {
-  //       authorization: `Bearer ${token}`,
-  //     }
-  //   })
-  //     .then(res => this._handleError(res))
-  // }
+  getProfile(token) {
+    return fetch(`${this._api}/users/me`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    })
+      .then(res => super._handleError(res))
+  }
 
-//   getInitialCards(token) {
-//     return fetch(`https://${this._domain}/cards`, {
-//       headers: {
-//         authorization: `Bearer ${token}`,
-//       }
-//     })
-//       .then(res => this._handleError(res))
-//   }
+  editProfile(name, email, token) {
+    return fetch(`${this._api}/users/me`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email })
+    })
+      .then(res => super._handleError(res))
+  }
 
-  // editProfile(name, email, token) {
-  //   return fetch(`https://${this._domain}/users/me`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       authorization: `Bearer ${token}`,
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ name, email })
-  //   })
-  //     .then(res => this._handleError(res))
-  // }
+  getSavedMovies(token) {
+    return fetch(`${this._api}/movies`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    })
+      .then(res => super._handleError(res))
+  }
 
-//   addCard(name, link, token) {
-//     return fetch(`https://${this._domain}/cards`, {
-//       method: "POST",
-//       headers: {
-//         authorization: `Bearer ${token}`,
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({ name, link })
-//     })
-//       .then(res => this._handleError(res))
-//   }
+  createMovie(
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+    token
+  ) {
+    return fetch(`${this._api}/movies`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        country,
+        director,
+        duration,
+        year,
+        description,
+        image,
+        trailer,
+        nameRU,
+        nameEN,
+        thumbnail,
+        movieId
+      })
+    })
+      .then(res => super._handleError(res))
+  }
 
-//   deleteCard(id, token) {
-//     return fetch(`https://${this._domain}/cards/${id}`, {
-//       method: "DELETE",
-//       headers: {
-//         authorization: `Bearer ${token}`,
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//       .then(res => this._handleError(res))
-//   }
-
-//   addLike(id, token) {
-//     return fetch(`https://${this._domain}/cards/${id}/likes`, {
-//       method: "PUT",
-//       headers: {
-//         authorization: `Bearer ${token}`,
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//       .then(res => this._handleError(res))
-//   }
-
-//   deleteLike(id, token) {
-//     return fetch(`https://${this._domain}/cards/${id}/likes`, {
-//       method: "DELETE",
-//       headers: {
-//         authorization: `Bearer ${token}`,
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//       .then(res => this._handleError(res))
-//   }
+  deleteMovie(id, token) {
+    return fetch(`${this._api}/movies/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => super._handleError(res))
+  }
 }
 
-const mainApi = new MainApi(MAIN_DOMAIN);
+const mainApi = new MainApi(MAIN_API);
 
 export default mainApi;

@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import './Form.css';
 
 function Form(props) {
-  const { submit, cta, link, children } = props;
+  const { submit, cta, link, onSubmit, children } = props;
 
   return (
     <>
-      <form className="form" action="">
+      <form className="form" onSubmit={onSubmit} noValidate>
         { children }
 
         <button className="form__submit">{ submit }</button>

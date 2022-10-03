@@ -23,7 +23,7 @@ function App() {
   const [ loggedIn, setLoggedIn ] = useState(true);
 
   useEffect(() => {
-    moviesApi.getMovies();
+    console.log(moviesApi.getMovies());
   }, [])
 
   return (

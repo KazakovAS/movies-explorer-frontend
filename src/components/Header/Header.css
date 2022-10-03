@@ -64,6 +64,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-color: transparent;
+  cursor: pointer;
   border: none;
   padding: 0;
 }
