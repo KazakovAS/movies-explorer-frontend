@@ -14,7 +14,7 @@ function Form(props) {
 
         <p className="form__cta">
           { cta }
-          <Link href={ link.url } className="form__cta-link">{ link.text }</Link>
+          <Link to={ link.url } className="form__cta-link">{ link.text }</Link>
         </p>
       </form>
     </>

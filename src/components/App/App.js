@@ -22,10 +22,6 @@ function App() {
   const [ currentUser, setCurrentUser ] = useState({});
   const [ loggedIn, setLoggedIn ] = useState(true);
 
-  useEffect(() => {
-    console.log(moviesApi.getMovies());
-  }, [])
-
   return (
     <AuthContext.Provider value={{ loggedIn: loggedIn }}>
       <CurrentUserContext.Provider value={ currentUser }>
