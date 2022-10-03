@@ -9,7 +9,12 @@ class MoviesApi extends Api {
   }
 
   getMovies() {
-    return fetch(`${URL_PROTOCOL}://${this._domain}/beatfilm-movies`).then(res => super._handleError(res))
+    return fetch(`${URL_PROTOCOL}://${this._domain}/beatfilm-movies`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => super._handleError(res))
   }
 }
 
