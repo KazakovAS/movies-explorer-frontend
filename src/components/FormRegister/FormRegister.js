@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
 import Form from '../Form/Form';
-import auth from '../../utils/auth';
 
-function FormRegister() {
+function FormRegister(props) {
+  const { handleRegisterSubmit } = props;
+
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
@@ -28,34 +29,15 @@ function FormRegister() {
     }
   }
 
-  function register(name, email, password) {
-    auth.register(name, email, password)
-      .then(res => {
-        if (res.statusCode !== 400) {
-          // setRequestCompleted(true);
-          // setTooltipPopupOpen(true);
-          setTimeout(() => {
-            // setTooltipPopupOpen(false);
-            // handleLoginSubmit(email, password);
-          }, 3000);
-        }
-      })
-      .catch((err) => {
-        // setRequestCompleted(false);
-        // setTooltipPopupOpen(true);
-        console.error(err);
-      });
-  }
-
-  function handleRegisterSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
 
-    register(name, email, password);
+    handleRegisterSubmit(name, email, password);
   }
 
   return (
     <Form
-      onSubmit={handleRegisterSubmit}
+      onSubmit={onSubmit}
       submit={submit}
       cta={cta}
       link={link}

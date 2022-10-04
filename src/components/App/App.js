@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -13,17 +13,51 @@ import PageRegister from '../../routes/PageRegister';
 import PageNotFound from '../../routes/PageNotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import mainApi from "../../utils/MainApi";
-import moviesApi from "../../utils/MoviesApi";
-
 import './App.css';
+import auth from "../../utils/auth";
 
 function App() {
+  const history = useHistory();
   const [ currentUser, setCurrentUser ] = useState({});
-  const [ loggedIn, setLoggedIn ] = useState(true);
+  const [ loggedIn, setLoggedIn ] = useState(false);
+  const [ userEmail, setUserEmail ] = useState('');
+
+  function handleRegisterSubmit(name, email, password) {
+    auth.register(name, email, password)
+      .then(res => {
+        if (res.statusCode !== 400) {
+          // setRequestCompleted(true);
+          // setTooltipPopupOpen(true);
+          setTimeout(() => {
+            // setTooltipPopupOpen(false);
+            handleAuthorizeSubmit(email, password);
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        // setRequestCompleted(false);
+        // setTooltipPopupOpen(true);
+        console.error(err);
+      });
+  }
+
+  function handleAuthorizeSubmit(email, password) {
+    auth.authorize(email, password)
+      .then(res => {
+        if (res.token) {
+          setLoggedIn(true);
+          setUserEmail(email);
+          history.push('/movies');
+        }
+      })
+      .catch(() => {
+        // setRequestCompleted(false);
+        // setTooltipPopupOpen(true);
+      });
+  }
 
   return (
-    <AuthContext.Provider value={{ loggedIn: loggedIn }}>
+    <AuthContext.Provider value={{ loggedIn: loggedIn, setLoggedIn: setLoggedIn }}>
       <CurrentUserContext.Provider value={ currentUser }>
         <div className="app">
           <Switch>
@@ -47,11 +81,15 @@ function App() {
             />
 
             <Route path="/signup">
-              <PageRegister />
+              <PageRegister
+                handleRegisterSubmit={handleRegisterSubmit}
+              />
             </Route>
 
             <Route path="/signin">
-              <PageLogin />
+              <PageLogin
+                handleAuthorizeSubmit={handleAuthorizeSubmit}
+              />
             </Route>
 
             <Route path="*">

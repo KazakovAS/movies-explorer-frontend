@@ -12,8 +12,7 @@ function Header(props) {
   const { theme } = props;
 
   const [ isMenuOpen, setMenuOpen ] = useState(false);
-  // const loggedIn = useContext(AuthContext);
-  const loggedIn = false;
+  const { loggedIn } = useContext(AuthContext);
 
   function openMenu() {
     setMenuOpen(!isMenuOpen);

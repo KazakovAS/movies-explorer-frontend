@@ -3,14 +3,18 @@ import FormLogin from "../FormLogin/FormLogin";
 
 import './Login.css';
 
-function Login() {
+function Login(props) {
+  const { handleAuthorizeSubmit } = props;
+
   const heading = "Рады видеть!";
 
   return (
     <section className="login">
       <div className="login__wrapper">
         <Greeting heading={heading} />
-        <FormLogin />
+        <FormLogin
+          handleAuthorizeSubmit={handleAuthorizeSubmit}
+        />
       </div>
     </section>
   );

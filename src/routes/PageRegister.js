@@ -1,11 +1,15 @@
 import Content from '../components/Content/Content';
 import Register from '../components/Register/Register';
 
-function PageRegister() {
+function PageRegister(props) {
+  const { handleRegisterSubmit } = props;
+
   return (
     <>
       <Content>
-        <Register />
+        <Register
+          handleRegisterSubmit={handleRegisterSubmit}
+        />
       </Content>
     </>
   );

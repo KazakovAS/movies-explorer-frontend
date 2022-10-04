@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import Form from '../Form/Form';
-import auth from '../../utils/auth';
 
-function FormLogin() {
-  const history = useHistory();
+function FormLogin(props) {
+  const { handleAuthorizeSubmit } = props;
+
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
@@ -25,26 +24,10 @@ function FormLogin() {
     }
   }
 
-  function authorize(email, password) {
-    auth.authorize(email, password)
-      .then(res => {
-        if (res.token) {
-          // setLoggedIn(true);
-          // setUserEmail(email);
-          history.push('/movies');
-        }
-      })
-      .catch(() => {
-        // setRequestCompleted(false);
-        // setTooltipPopupOpen(true);
-      });
-  }
-
-
-  function handleAuthorizeSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
 
-    authorize(email, password);
+    handleAuthorizeSubmit(email, password);
   }
 
   return (
@@ -52,7 +35,7 @@ function FormLogin() {
       submit={submit}
       cta={cta}
       link={link}
-      onSubmit={handleAuthorizeSubmit}
+      onSubmit={onSubmit}
     >
       <label className="form__item">
         <span className="form__label">E-mail</span>

@@ -3,14 +3,18 @@ import FormRegister from '../FormRegister/FormRegister';
 
 import './Register.css';
 
-function Register() {
+function Register(props) {
+  const { handleRegisterSubmit } = props;
+
   const heading = "Добро пожаловать!";
 
   return (
     <section className="register">
       <div className="register__wrapper">
         <Greeting heading={heading} />
-        <FormRegister />
+        <FormRegister
+          handleRegisterSubmit={handleRegisterSubmit}
+        />
       </div>
     </section>
   );

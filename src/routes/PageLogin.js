@@ -1,11 +1,15 @@
 import Content from '../components/Content/Content';
 import Login from '../components/Login/Login';
 
-function PageLogin() {
+function PageLogin(props) {
+  const { handleAuthorizeSubmit } = props;
+
   return (
     <>
       <Content>
-        <Login />
+        <Login
+          handleAuthorizeSubmit={handleAuthorizeSubmit}
+        />
       </Content>
     </>
   );
