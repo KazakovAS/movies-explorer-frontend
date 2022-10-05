@@ -1,10 +1,11 @@
 import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRoute = ({ component: Component, ...props }) => {
+const ProtectedRoute = ({ component: Component, loggedIn, ...props }) => {
   return (
     <Route>
-      {() =>
-        (localStorage.getItem('jwt')) ? <Component {...props} /> : <Redirect to="./signin" />
+      { loggedIn
+          ? <Component {...props} />
+          : <Redirect to="./signin" />
       }
     </Route>
   );

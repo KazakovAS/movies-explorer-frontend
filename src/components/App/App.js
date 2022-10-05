@@ -21,7 +21,7 @@ import moviesApi from "../../utils/MoviesApi";
 function App() {
   const history = useHistory();
   const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
-  const [ loggedIn, setLoggedIn ] = useState(false);
+  const [ loggedIn, setLoggedIn ] = useState(!!localStorage.getItem("jwt"));
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [ isProcessing, setIsProcessing ] = useState(false);
@@ -181,6 +181,7 @@ function App() {
             <ProtectedRoute
               path="/movies"
               component={PageMovies}
+              loggedIn={loggedIn}
               handleSearchFormSubmit={handleSearchFormSubmit}
               isProcessing={isProcessing}
               serverResponse={serverResponse}
@@ -189,11 +190,13 @@ function App() {
             <ProtectedRoute
               path="/saved-movies"
               component={PageSavedMovies}
+              loggedIn={loggedIn}
             />
 
             <ProtectedRoute
               path="/profile"
               component={PageProfile}
+              loggedIn={loggedIn}
               handleEditProfileSubmit={handleEditProfileSubmit}
               handleSignOutClick={handleSignOutClick}
               isProcessing={isProcessing}
