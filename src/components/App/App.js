@@ -28,7 +28,6 @@ function App() {
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
   useEffect(() => {
-    /** Проверка токена, получение email */
     tokenCheck();
     if (loggedIn) {
       setCurrentUser({
