@@ -2,7 +2,7 @@ import Content from '../components/Content/Content';
 import Register from '../components/Register/Register';
 
 function PageRegister(props) {
-  const { handleRegisterSubmit, isProcessing, requestError } = props;
+  const { handleRegisterSubmit, isProcessing, responseError } = props;
 
   return (
     <>
@@ -10,7 +10,7 @@ function PageRegister(props) {
         <Register
           handleRegisterSubmit={handleRegisterSubmit}
           isProcessing={isProcessing}
-          requestError={requestError}
+          responseError={responseError}
         />
       </Content>
     </>

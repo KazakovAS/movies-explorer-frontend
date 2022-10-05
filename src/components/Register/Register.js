@@ -4,7 +4,7 @@ import FormRegister from '../FormRegister/FormRegister';
 import './Register.css';
 
 function Register(props) {
-  const { handleRegisterSubmit, isProcessing, requestError } = props;
+  const { handleRegisterSubmit, isProcessing, responseError } = props;
 
   const heading = "Добро пожаловать!";
 
@@ -15,7 +15,7 @@ function Register(props) {
         <FormRegister
           handleRegisterSubmit={handleRegisterSubmit}
           isProcessing={isProcessing}
-          requestError={requestError}
+          responseError={responseError}
         />
       </div>
     </section>

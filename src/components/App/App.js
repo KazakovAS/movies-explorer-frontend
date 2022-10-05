@@ -22,7 +22,7 @@ function App() {
   const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
   const [ loggedIn, setLoggedIn ] = useState(false);
   const [ isProcessing, setIsProcessing ] = useState(false);
-  const [ requestError, setRequestError ] = useState('');
+  const [ responseError, setResponseError ] = useState('');
 
   useEffect(() => {
     checkAuth();
@@ -40,7 +40,7 @@ function App() {
       })
       .catch((err) => {
         setIsProcessing(false);
-        setRequestError(err.message);
+        setResponseError(err.message);
       });
   }
 
@@ -60,7 +60,7 @@ function App() {
       })
       .catch((err) => {
         setIsProcessing(false);
-        setRequestError(err.message);
+        setResponseError(err.message);
       });
   }
 
@@ -77,7 +77,7 @@ function App() {
         setCurrentUser({ name: res.name, email: res.email });
       })
       .catch((err) => {
-        setRequestError(err.message);
+        setResponseError(err.message);
       });
   }
 
@@ -118,7 +118,7 @@ function App() {
                 : <PageRegister
                     handleRegisterSubmit={handleRegisterSubmit}
                     isProcessing={isProcessing}
-                    requestError={requestError}
+                    responseError={responseError}
                   />}
             </Route>
 
@@ -128,7 +128,7 @@ function App() {
                 : <PageLogin
                     handleAuthorizeSubmit={handleAuthorizeSubmit}
                     isProcessing={isProcessing}
-                    requestError={requestError}
+                    responseError={responseError}
                   />}
             </Route>
 

@@ -2,7 +2,7 @@ import Content from '../components/Content/Content';
 import Login from '../components/Login/Login';
 
 function PageLogin(props) {
-  const { handleAuthorizeSubmit, isProcessing, requestError } = props;
+  const { handleAuthorizeSubmit, isProcessing, responseError } = props;
 
   return (
     <>
@@ -10,7 +10,7 @@ function PageLogin(props) {
         <Login
           handleAuthorizeSubmit={handleAuthorizeSubmit}
           isProcessing={isProcessing}
-          requestError={requestError}
+          responseError={responseError}
         />
       </Content>
     </>

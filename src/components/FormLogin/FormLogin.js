@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import validations from '../../utils/validations';
 
 function FormLogin(props) {
-  const { handleAuthorizeSubmit, isProcessing, requestError } = props;
+  const { handleAuthorizeSubmit, isProcessing, responseError } = props;
   const {
     register,
     formState: {
@@ -60,7 +60,7 @@ function FormLogin(props) {
         { errors?.password && <span className="form__field-error">{ errors?.password?.message }</span> }
       </label>
 
-      <div className="form__error">{requestError}</div>
+      <div className="form__error">{responseError}</div>
 
       <button className="form__submit" disabled={!isValid || isProcessing}>Войти</button>
 
