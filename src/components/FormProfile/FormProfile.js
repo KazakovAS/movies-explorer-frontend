@@ -9,6 +9,8 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function FormProfile(props) {
   const { handleEditProfileSubmit, handleSignOutClick, isProcessing, responseError } = props;
+
+  const { currentUser } = useContext(CurrentUserContext);
   const {
     register,
     formState: {
@@ -20,20 +22,20 @@ function FormProfile(props) {
     // reset,
   } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      profileName: currentUser.name,
+      profileEmail: currentUser.email,
+    },
   });
-
+  const [ profileName, profileEmail ] = watch(['profileName', 'profileEmail']);
   const {
     required: requiredRules,
     name: nameRules,
     email: emailRules
   } = validations;
-  const [ formName, formEmail ] = watch(['name', 'email']);
-  const { currentUser } = useContext(CurrentUserContext);
-
-  console.log(currentUser)
 
   function onSubmit() {
-    handleEditProfileSubmit(formName, formEmail, localStorage.getItem('jwt'));
+    handleEditProfileSubmit(profileName, profileEmail, localStorage.getItem('jwt'));
 
     // reset();
   }
@@ -46,25 +48,23 @@ function FormProfile(props) {
       <label className="profile-form__item">
         <span className="profile-form__label">Имя</span>
         <input
-          {...register('name', {
+          {...register('profileName', {
             required: requiredRules,
             minLength: nameRules.minLength,
             maxLength: nameRules.maxLength,
             pattern: nameRules.pattern,
           })}
-          // value={}
-          className={`profile-form__field ${errors?.name ? 'form__field_type_error' : ''}`}
+          className={`profile-form__field ${errors?.profileName ? 'form__field_type_error' : ''}`}
         />
       </label>
       <label className="profile-form__item">
         <span className="profile-form__label">E-mail</span>
         <input
-          {...register('email', {
+          {...register('profileEmail', {
             required: requiredRules,
             pattern: emailRules.pattern,
           })}
-          // value={}
-          className={`profile-form__field ${errors?.email ? 'form__field_type_error' : ''}`}
+          className={`profile-form__field ${errors?.profileEmail ? 'form__field_type_error' : ''}`}
           type="email"
         />
       </label>
@@ -74,7 +74,12 @@ function FormProfile(props) {
 
         <button
           className="form__controls-item"
-          disabled={!isValid || isProcessing}
+          disabled={
+            !isValid
+            || isProcessing
+            || (profileName === currentUser.name
+            && profileEmail === currentUser.email)
+          }
         >
           Редактировать
         </button>
@@ -82,6 +87,7 @@ function FormProfile(props) {
         <button
           className="form__controls-item form__controls-item_type_logout"
           onClick={handleSignOutClick}
+          type="button"
         >
           Выйти из аккаунта
         </button>

@@ -69,7 +69,7 @@ function App() {
 
     mainApi.editProfile(name, email, token)
       .then((res) => {
-        setCurrentUser({ name: res.name, email: res.email })
+        setUserData(res);
       })
       .finally(() => {
         setIsProcessing(false);
@@ -90,11 +90,17 @@ function App() {
   function getCurrentUser(token) {
     mainApi.getProfile(token)
       .then(res => {
-        setCurrentUser({ name: res.name, email: res.email });
+        setUserData(res);
       })
       .catch((err) => {
         setResponseError(err.message);
       });
+  }
+
+  function setUserData(data) {
+    setCurrentUser({ name: data.name, email: data.email });
+    localStorage.setItem('name', data.name);
+    localStorage.setItem('email', data.email);
   }
 
   function checkAuth() {

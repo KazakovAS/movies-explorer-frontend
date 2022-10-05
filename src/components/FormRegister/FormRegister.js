@@ -76,14 +76,15 @@ function FormRegister(props) {
         { errors?.password && <span className="form__field-error">{ errors?.password?.message }</span> }
       </label>
 
-      <div className="form__error">{responseError}</div>
 
-      <button className="form__submit" disabled={!isValid || isProcessing}>Зарегистрироваться</button>
-
-      <p className="form__cta">
-        Уже зарегистрированы?
-        <Link to="/signin" className="form__cta-link">Войти</Link>
-      </p>
+      <div className="form__controls">
+        <div className="form__error">{responseError}</div>
+        <button className="form__submit" disabled={!isValid || isProcessing}>Зарегистрироваться</button>
+        <p className="form__cta">
+          Уже зарегистрированы?
+          <Link to="/signin" className="form__cta-link">Войти</Link>
+        </p>
+      </div>
     </Form>
   );
 }

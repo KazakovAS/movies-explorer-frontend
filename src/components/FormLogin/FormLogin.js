@@ -60,14 +60,14 @@ function FormLogin(props) {
         { errors?.password && <span className="form__field-error">{ errors?.password?.message }</span> }
       </label>
 
-      <div className="form__error">{responseError}</div>
-
-      <button className="form__submit" disabled={!isValid || isProcessing}>Войти</button>
-
-      <p className="form__cta">
-        Ещё не зарегистрированы?
-        <Link to="/signup" className="form__cta-link">Регистрация</Link>
-      </p>
+      <div className="form__controls">
+        <div className="form__error">{responseError}</div>
+        <button className="form__submit" disabled={!isValid || isProcessing}>Войти</button>
+        <p className="form__cta">
+          Ещё не зарегистрированы?
+          <Link to="/signup" className="form__cta-link">Регистрация</Link>
+        </p>
+      </div>
     </Form>
   );
 }
