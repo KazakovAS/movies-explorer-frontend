@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import validations from '../../utils/validations';
 
 function FormRegister(props) {
-  const { handleRegisterSubmit, requestError } = props;
+  const { handleRegisterSubmit, isProcessing, requestError } = props;
   const {
     register,
     formState: {
@@ -78,7 +78,7 @@ function FormRegister(props) {
 
       <div className="form__error">{requestError}</div>
 
-      <button className="form__submit" disabled={!isValid}>Зарегистрироваться</button>
+      <button className="form__submit" disabled={!isValid || isProcessing}>Зарегистрироваться</button>
 
       <p className="form__cta">
         Уже зарегистрированы?

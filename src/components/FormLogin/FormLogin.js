@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import validations from '../../utils/validations';
 
 function FormLogin(props) {
-  const { handleAuthorizeSubmit, requestError } = props;
+  const { handleAuthorizeSubmit, isProcessing, requestError } = props;
   const {
     register,
     formState: {
@@ -14,7 +14,7 @@ function FormLogin(props) {
     },
     watch,
     handleSubmit,
-    reset,
+    // reset,
   } = useForm({
     mode: 'onChange',
   });
@@ -28,7 +28,7 @@ function FormLogin(props) {
   function onSubmit() {
     handleAuthorizeSubmit(formEmail, formPassword);
 
-    reset();
+    // reset();
   }
 
   return (
@@ -62,7 +62,7 @@ function FormLogin(props) {
 
       <div className="form__error">{requestError}</div>
 
-      <button className="form__submit" disabled={!isValid}>Войти</button>
+      <button className="form__submit" disabled={!isValid || isProcessing}>Войти</button>
 
       <p className="form__cta">
         Ещё не зарегистрированы?

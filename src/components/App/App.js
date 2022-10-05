@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -21,23 +21,32 @@ function App() {
   const history = useHistory();
   const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
   const [ loggedIn, setLoggedIn ] = useState(false);
+  const [ isProcessing, setIsProcessing ] = useState(false);
   const [ requestError, setRequestError ] = useState('');
 
-  // useEffect(() => {
-  //   console.log(currentUser);
-  // }, [loggedIn]);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   function handleRegisterSubmit(name, email, password) {
+    setIsProcessing(true);
+
     auth.register(name, email, password)
       .then(() => {
         handleAuthorizeSubmit(email, password);
       })
+      .finally(() => {
+        setIsProcessing(false);
+      })
       .catch((err) => {
+        setIsProcessing(false);
         setRequestError(err.message);
       });
   }
 
   function handleAuthorizeSubmit(email, password) {
+    setIsProcessing(true);
+
     auth.authorize(email, password)
       .then(res => {
         if (res.token) {
@@ -46,7 +55,11 @@ function App() {
           history.push('/movies');
         }
       })
+      .finally(() => {
+        setIsProcessing(false);
+      })
       .catch((err) => {
+        setIsProcessing(false);
         setRequestError(err.message);
       });
   }
@@ -66,6 +79,12 @@ function App() {
       .catch((err) => {
         setRequestError(err.message);
       });
+  }
+
+  function checkAuth() {
+    if (localStorage.getItem('jwt')) {
+      setLoggedIn(true);
+    }
   }
 
   return (
@@ -94,17 +113,23 @@ function App() {
             />
 
             <Route path="/signup">
-              <PageRegister
-                handleRegisterSubmit={handleRegisterSubmit}
-                requestError={requestError}
-              />
+              { loggedIn
+                ? <Redirect to="/" />
+                : <PageRegister
+                    handleRegisterSubmit={handleRegisterSubmit}
+                    isProcessing={isProcessing}
+                    requestError={requestError}
+                  />}
             </Route>
 
             <Route path="/signin">
-              <PageLogin
-                handleAuthorizeSubmit={handleAuthorizeSubmit}
-                requestError={requestError}
-              />
+              { loggedIn
+                ? <Redirect to="/" />
+                : <PageLogin
+                    handleAuthorizeSubmit={handleAuthorizeSubmit}
+                    isProcessing={isProcessing}
+                    requestError={requestError}
+                  />}
             </Route>
 
             <Route path="*">
