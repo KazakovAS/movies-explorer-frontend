@@ -45,8 +45,13 @@
   transition: opacity 1s;
 }
 
-.search-form__submit:hover {
+.search-form__submit:not(:disabled):hover {
   opacity: .6;
+}
+
+.search-form__submit:disabled {
+  background-color: #EBEBEB;
+  cursor: default;
 }
 
 .search-form__submit::after {

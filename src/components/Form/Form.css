@@ -74,7 +74,7 @@
 }
 
 .form__submit:disabled {
-  background-color: #F5F5F5;
+  background-color: #EBEBEB;
   color: #000000;
   cursor: default;
 }
@@ -127,6 +127,7 @@
 
 .form__controls-item:disabled {
   cursor: default;
+  color: #EBEBEB;
 }
 
 .form__controls-item_type_logout {

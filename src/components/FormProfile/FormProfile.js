@@ -35,8 +35,6 @@ function FormProfile(props) {
     email: emailRules
   } = validations;
 
-  console.log(serverResponse.status)
-
   function onSubmit() {
     handleEditProfileSubmit(profileName, profileEmail, localStorage.getItem('jwt'));
 

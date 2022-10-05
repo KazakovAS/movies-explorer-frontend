@@ -1,15 +1,48 @@
+import { useForm } from 'react-hook-form';
+
+import Form from "../Form/Form";
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import validations from '../../utils/validations';
 
 import './SearchForm.css';
 
-function SearchForm() {
+function SearchForm(props) {
+  const { handleSearchFormSubmit, isProcessing, serverResponse } = props;
+
+  const {
+    register,
+    formState: {
+      errors,
+      isValid,
+    },
+    watch,
+    handleSubmit,
+    // reset,
+  } = useForm({
+    mode: 'onChange',
+  });
+  const [ movieName ] = watch(['movieName']);
+  const {
+    movie: movieRules,
+  } = validations;
+
+  function onSubmit() {
+    handleSearchFormSubmit();
+
+    // reset();
+  }
+
   return (
-    <form action="" className="search-form">
+    <Form
+      className="search-form"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="search-form__item">
         <input
+          {...register('movie', {
+            required: movieRules.required,
+          })}
           className="search-form__field"
-          type="text"
-          name="movie"
           placeholder="Фильм"
           required
         />
@@ -17,11 +50,12 @@ function SearchForm() {
         <button
           className="search-form__submit"
           aria-label="Найти"
+          disabled={ !isValid || isProcessing }
         />
       </div>
 
       <FilterCheckbox />
-    </form>
+    </Form>
   );
 }
 

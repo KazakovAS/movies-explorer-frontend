@@ -20,6 +20,9 @@ const validations = {
       message: "Невалидный email",
     },
   },
+  movie: {
+    required: 'Нужно ввести ключевое слово',
+  },
 };
 
 export default validations;

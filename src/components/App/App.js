@@ -16,20 +16,28 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
+import moviesApi from "../../utils/MoviesApi";
 
 function App() {
   const history = useHistory();
   const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
   const [ loggedIn, setLoggedIn ] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [ isProcessing, setIsProcessing ] = useState(false);
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
   useEffect(() => {
-    checkAuth();
-    setCurrentUser({
-      name: localStorage.getItem('name'),
-      email: localStorage.getItem('email'),
-    });
+    /** Проверка токена, получение email */
+    tokenCheck();
+    if (loggedIn) {
+      setCurrentUser({
+        name: localStorage.getItem('name'),
+        email: localStorage.getItem('email'),
+      });
+      // getContent();
+    }
+
   }, [loggedIn]);
 
   function handleRegisterSubmit(name, email, password) {
@@ -111,9 +119,25 @@ function App() {
     localStorage.setItem('email', data.email);
   }
 
-  function checkAuth() {
-    if (localStorage.getItem('jwt')) {
-      setLoggedIn(true);
+  function tokenCheck() {
+    const token = localStorage.getItem("jwt");
+
+    if (token) {
+      auth.checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+          } else {
+            setLoggedIn(false)
+            handleSignOutClick();
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          setLoggedIn(false)
+        });
+    } else {
+      setLoggedIn(false);
     }
   }
 
@@ -121,6 +145,28 @@ function App() {
     setTimeout(() => {
       setServerResponse({ status: '', message: '' });
     }, 2000);
+  }
+
+  function getMovies() {
+    setIsProcessing(true);
+
+    moviesApi.getMovies()
+      .then((res) => {
+        const result = res.slice(0, 7);
+        console.log(result);
+      })
+      .finally(() => {
+        setIsProcessing(false);
+        resetServerResponse();
+      })
+      .catch((err) => {
+        setIsProcessing(false);
+        setServerResponse({ status: 'error', message: err.message});
+      });
+  }
+
+  function handleSearchFormSubmit() {
+    getMovies();
   }
 
   return (
@@ -135,6 +181,9 @@ function App() {
             <ProtectedRoute
               path="/movies"
               component={PageMovies}
+              handleSearchFormSubmit={handleSearchFormSubmit}
+              isProcessing={isProcessing}
+              serverResponse={serverResponse}
             />
 
             <ProtectedRoute

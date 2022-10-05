@@ -14,6 +14,6 @@ class MoviesApi extends Api {
   }
 }
 
-const mainApi = new MoviesApi(MOVIES_API);
+const moviesApi = new MoviesApi(MOVIES_API);
 
-export default mainApi;
+export default moviesApi;

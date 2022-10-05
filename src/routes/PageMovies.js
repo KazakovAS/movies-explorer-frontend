@@ -3,12 +3,18 @@ import Content from '../components/Content/Content';
 import Movies from '../components/Movies/Movies';
 import Footer from '../components/Footer/Footer';
 
-function PageMovies() {
+function PageMovies(props) {
+  const { handleSearchFormSubmit, isProcessing, serverResponse } = props;
+
   return (
     <>
       <Header />
       <Content>
-        <Movies />
+        <Movies
+          handleSearchFormSubmit={handleSearchFormSubmit}
+          isProcessing={isProcessing}
+          serverResponse={serverResponse}
+        />
       </Content>
       <Footer />
     </>
