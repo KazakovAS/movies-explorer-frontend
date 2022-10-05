@@ -64,6 +64,22 @@ function App() {
       });
   }
 
+  function handleEditProfileSubmit(name, email, token) {
+    setIsProcessing(true);
+
+    mainApi.editProfile(name, email, token)
+      .then((res) => {
+        setCurrentUser({ name: res.name, email: res.email })
+      })
+      .finally(() => {
+        setIsProcessing(false);
+      })
+      .catch((err) => {
+        setIsProcessing(false);
+        setResponseError(err.message);
+      });
+  }
+
   function handleSignOutClick() {
     localStorage.clear();
     setLoggedIn(false);
@@ -89,7 +105,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={{ loggedIn: loggedIn }}>
-      <CurrentUserContext.Provider value={ currentUser }>
+      <CurrentUserContext.Provider value={{ currentUser: currentUser }}>
         <div className="app">
           <Switch>
             <Route path="/" exact>
@@ -109,7 +125,10 @@ function App() {
             <ProtectedRoute
               path="/profile"
               component={PageProfile}
+              handleEditProfileSubmit={handleEditProfileSubmit}
               handleSignOutClick={handleSignOutClick}
+              isProcessing={isProcessing}
+              responseError={responseError}
             />
 
             <Route path="/signup">

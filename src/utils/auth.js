@@ -33,7 +33,7 @@ class Auth extends Api {
       .then(res => {
         if (res.token) {
           localStorage.setItem('jwt', res.token);
-          localStorage.setItem('email', email);
+          // localStorage.setItem('email', email);
           return res;
         }
       })

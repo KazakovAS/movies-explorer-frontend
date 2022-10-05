@@ -1,11 +1,11 @@
 import './Form.css';
 
 function Form(props) {
-  const { onSubmit, children } = props;
+  const { onSubmit, children, className = '' } = props;
 
   return (
     <>
-      <form className="form" onSubmit={onSubmit} noValidate>
+      <form className={`form ${className}`} onSubmit={onSubmit} noValidate>
         { children }
       </form>
     </>

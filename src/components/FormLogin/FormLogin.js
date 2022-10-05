@@ -20,7 +20,7 @@ function FormLogin(props) {
   });
 
   const {
-    required:requiredRules,
+    required: requiredRules,
     email: emailRules
   } = validations;
   const [ formEmail, formPassword ] = watch(['email', 'password']);
