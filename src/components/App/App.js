@@ -26,7 +26,11 @@ function App() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+    setCurrentUser({
+      name: localStorage.getItem('name'),
+      email: localStorage.getItem('email'),
+    });
+  }, [loggedIn]);
 
   function handleRegisterSubmit(name, email, password) {
     setIsProcessing(true);
