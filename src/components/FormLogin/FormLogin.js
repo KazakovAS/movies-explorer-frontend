@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import validations from '../../utils/validations';
 
 function FormLogin(props) {
-  const { handleAuthorizeSubmit, isProcessing, serverResponse } = props;
+  const { handleAuthorize, isProcessing, serverResponse } = props;
   const {
     register,
     formState: {
@@ -26,7 +26,7 @@ function FormLogin(props) {
   const [ formEmail, formPassword ] = watch(['email', 'password']);
 
   function onSubmit() {
-    handleAuthorizeSubmit(formEmail, formPassword);
+    handleAuthorize(formEmail, formPassword);
 
     // reset();
   }

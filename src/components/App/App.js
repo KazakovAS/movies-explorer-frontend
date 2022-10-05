@@ -39,12 +39,12 @@ function App() {
 
   }, [loggedIn]);
 
-  function handleRegisterSubmit(name, email, password) {
+  function handleRegister(name, email, password) {
     setIsProcessing(true);
 
     auth.register(name, email, password)
       .then(() => {
-        handleAuthorizeSubmit(email, password);
+        handleAuthorize(email, password);
       })
       .finally(() => {
         setIsProcessing(false);
@@ -56,7 +56,7 @@ function App() {
       });
   }
 
-  function handleAuthorizeSubmit(email, password) {
+  function handleAuthorize(email, password) {
     setIsProcessing(true);
 
     auth.authorize(email, password)
@@ -77,7 +77,7 @@ function App() {
       });
   }
 
-  function handleEditProfileSubmit(name, email, token) {
+  function handleEditProfile(name, email, token) {
     setIsProcessing(true);
 
     mainApi.editProfile(name, email, token)
@@ -95,7 +95,7 @@ function App() {
       });
   }
 
-  function handleSignOutClick() {
+  function handleSignOut() {
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({ name: '', email: '' });
@@ -128,7 +128,7 @@ function App() {
             setLoggedIn(true);
           } else {
             setLoggedIn(false)
-            handleSignOutClick();
+            handleSignOut();
           }
         })
         .catch(err => {
@@ -164,7 +164,7 @@ function App() {
       });
   }
 
-  function handleSearchFormSubmit() {
+  function handleSearchForm() {
     getMovies();
   }
 
@@ -181,7 +181,7 @@ function App() {
               path="/movies"
               component={PageMovies}
               loggedIn={loggedIn}
-              handleSearchFormSubmit={handleSearchFormSubmit}
+              handleSearchForm={handleSearchForm}
               isProcessing={isProcessing}
               serverResponse={serverResponse}
             />
@@ -196,8 +196,8 @@ function App() {
               path="/profile"
               component={PageProfile}
               loggedIn={loggedIn}
-              handleEditProfileSubmit={handleEditProfileSubmit}
-              handleSignOutClick={handleSignOutClick}
+              handleEditProfile={handleEditProfile}
+              handleSignOut={handleSignOut}
               isProcessing={isProcessing}
               serverResponse={serverResponse}
             />
@@ -206,7 +206,7 @@ function App() {
               { loggedIn
                 ? <Redirect to="/" />
                 : <PageRegister
-                    handleRegisterSubmit={handleRegisterSubmit}
+                    handleRegister={handleRegister}
                     isProcessing={isProcessing}
                     serverResponse={serverResponse}
                   />}
@@ -216,7 +216,7 @@ function App() {
               { loggedIn
                 ? <Redirect to="/" />
                 : <PageLogin
-                    handleAuthorizeSubmit={handleAuthorizeSubmit}
+                    handleAuthorize={handleAuthorize}
                     isProcessing={isProcessing}
                     serverResponse={serverResponse}
                   />}

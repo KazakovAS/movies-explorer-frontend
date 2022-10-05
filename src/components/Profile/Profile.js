@@ -6,7 +6,7 @@ import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Profile(props) {
-  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, serverResponse } = props;
+  const { handleEditProfile, handleSignOut, isProcessing, serverResponse } = props;
 
   const { currentUser } = useContext(CurrentUserContext);
 
@@ -16,8 +16,8 @@ function Profile(props) {
         <h1 className="profile__header">Привет, { currentUser.name }!</h1>
 
         <FormProfile
-          handleEditProfileSubmit={handleEditProfileSubmit}
-          handleSignOutClick={handleSignOutClick}
+          handleEditProfile={handleEditProfile}
+          handleSignOut={handleSignOut}
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />

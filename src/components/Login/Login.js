@@ -4,7 +4,7 @@ import FormLogin from "../FormLogin/FormLogin";
 import './Login.css';
 
 function Login(props) {
-  const { handleAuthorizeSubmit, isProcessing, serverResponse } = props;
+  const { handleAuthorize, isProcessing, serverResponse } = props;
 
   const heading = "Рады видеть!";
 
@@ -13,7 +13,7 @@ function Login(props) {
       <div className="login__wrapper">
         <Greeting heading={heading} />
         <FormLogin
-          handleAuthorizeSubmit={handleAuthorizeSubmit}
+          handleAuthorize={handleAuthorize}
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />

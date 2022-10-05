@@ -8,7 +8,7 @@ import validations from '../../utils/validations';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function FormProfile(props) {
-  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, serverResponse } = props;
+  const { handleEditProfile, handleSignOut, isProcessing, serverResponse } = props;
 
   const { currentUser } = useContext(CurrentUserContext);
 
@@ -36,7 +36,7 @@ function FormProfile(props) {
   } = validations;
 
   function onSubmit() {
-    handleEditProfileSubmit(profileName, profileEmail, localStorage.getItem('jwt'));
+    handleEditProfile(profileName, profileEmail, localStorage.getItem('jwt'));
 
     // reset();
   }
@@ -97,7 +97,7 @@ function FormProfile(props) {
 
         <button
           className="form__controls-item form__controls-item_type_logout"
-          onClick={handleSignOutClick}
+          onClick={handleSignOut}
           type="button"
         >
           Выйти из аккаунта

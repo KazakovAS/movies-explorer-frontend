@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import validations from '../../utils/validations';
 
 function FormRegister(props) {
-  const { handleRegisterSubmit, isProcessing, serverResponse } = props;
+  const { handleRegister, isProcessing, serverResponse } = props;
   const {
     register,
     formState: {
@@ -27,7 +27,7 @@ function FormRegister(props) {
   const [ formName, formEmail, formPassword ] = watch(['name', 'email', 'password']);
 
   function onSubmit() {
-    handleRegisterSubmit(formName, formEmail, formPassword);
+    handleRegister(formName, formEmail, formPassword);
 
     // reset();
   }

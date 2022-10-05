@@ -2,13 +2,13 @@ import Content from '../components/Content/Content';
 import Login from '../components/Login/Login';
 
 function PageLogin(props) {
-  const { handleAuthorizeSubmit, isProcessing, serverResponse } = props;
+  const { handleAuthorize, isProcessing, serverResponse } = props;
 
   return (
     <>
       <Content>
         <Login
-          handleAuthorizeSubmit={handleAuthorizeSubmit}
+          handleAuthorize={handleAuthorize}
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />

@@ -3,14 +3,14 @@ import Content from '../components/Content/Content';
 import Profile from '../components/Profile/Profile';
 
 function PageProfile(props) {
-  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, serverResponse } = props;
+  const { handleEditProfile, handleSignOut, isProcessing, serverResponse } = props;
   return (
     <>
       <Header />
       <Content>
         <Profile
-          handleEditProfileSubmit={handleEditProfileSubmit}
-          handleSignOutClick={handleSignOutClick}
+          handleEditProfile={handleEditProfile}
+          handleSignOut={handleSignOut}
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />

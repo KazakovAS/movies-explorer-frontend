@@ -7,7 +7,7 @@ import validations from '../../utils/validations';
 import './SearchForm.css';
 
 function SearchForm(props) {
-  const { handleSearchFormSubmit, isProcessing, serverResponse } = props;
+  const { handleSearchForm, isProcessing, serverResponse } = props;
 
   const {
     register,
@@ -27,7 +27,7 @@ function SearchForm(props) {
   } = validations;
 
   function onSubmit() {
-    handleSearchFormSubmit();
+    handleSearchForm();
 
     // reset();
   }

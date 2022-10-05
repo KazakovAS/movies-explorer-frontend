@@ -4,7 +4,7 @@ import FormRegister from '../FormRegister/FormRegister';
 import './Register.css';
 
 function Register(props) {
-  const { handleRegisterSubmit, isProcessing, serverResponse } = props;
+  const { handleRegister, isProcessing, serverResponse } = props;
 
   const heading = "Добро пожаловать!";
 
@@ -13,7 +13,7 @@ function Register(props) {
       <div className="register__wrapper">
         <Greeting heading={heading} />
         <FormRegister
-          handleRegisterSubmit={handleRegisterSubmit}
+          handleRegister={handleRegister}
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />

@@ -5,13 +5,13 @@ import Preloader from "../Preloader/Preloader";
 import './Movies.css';
 
 function Movies(props) {
-  const { handleSearchFormSubmit, isProcessing, serverResponse } = props;
+  const { handleSearchForm, isProcessing, serverResponse } = props;
 
   return (
     <section className="movies">
       <div className="movies__wrapper">
         <SearchForm
-          handleSearchFormSubmit={handleSearchFormSubmit}
+          handleSearchForm={handleSearchForm}
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />
