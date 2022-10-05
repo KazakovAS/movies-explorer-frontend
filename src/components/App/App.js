@@ -15,29 +15,25 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import './App.css';
 import auth from "../../utils/auth";
+import mainApi from "../../utils/MainApi";
 
 function App() {
   const history = useHistory();
-  const [ currentUser, setCurrentUser ] = useState({});
+  const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
   const [ loggedIn, setLoggedIn ] = useState(false);
-  const [ userEmail, setUserEmail ] = useState('');
+  const [ requestError, setRequestError ] = useState('');
+
+  // useEffect(() => {
+  //   console.log(currentUser);
+  // }, [loggedIn]);
 
   function handleRegisterSubmit(name, email, password) {
     auth.register(name, email, password)
-      .then(res => {
-        if (res.statusCode !== 400) {
-          // setRequestCompleted(true);
-          // setTooltipPopupOpen(true);
-          setTimeout(() => {
-            // setTooltipPopupOpen(false);
-            handleAuthorizeSubmit(email, password);
-          }, 3000);
-        }
+      .then(() => {
+        handleAuthorizeSubmit(email, password);
       })
       .catch((err) => {
-        // setRequestCompleted(false);
-        // setTooltipPopupOpen(true);
-        console.error(err);
+        setRequestError(err.message);
       });
   }
 
@@ -46,18 +42,34 @@ function App() {
       .then(res => {
         if (res.token) {
           setLoggedIn(true);
-          setUserEmail(email);
+          getCurrentUser(res.token);
           history.push('/movies');
         }
       })
-      .catch(() => {
-        // setRequestCompleted(false);
-        // setTooltipPopupOpen(true);
+      .catch((err) => {
+        setRequestError(err.message);
+      });
+  }
+
+  function handleSignOutClick() {
+    localStorage.clear();
+    setLoggedIn(false);
+    setCurrentUser({ name: '', email: '' });
+    history.push('/');
+  }
+
+  function getCurrentUser(token) {
+    mainApi.getProfile(token)
+      .then(res => {
+        setCurrentUser({ name: res.name, email: res.email });
+      })
+      .catch((err) => {
+        setRequestError(err.message);
       });
   }
 
   return (
-    <AuthContext.Provider value={{ loggedIn: loggedIn, setLoggedIn: setLoggedIn }}>
+    <AuthContext.Provider value={{ loggedIn: loggedIn }}>
       <CurrentUserContext.Provider value={ currentUser }>
         <div className="app">
           <Switch>
@@ -78,17 +90,20 @@ function App() {
             <ProtectedRoute
               path="/profile"
               component={PageProfile}
+              handleSignOutClick={handleSignOutClick}
             />
 
             <Route path="/signup">
               <PageRegister
                 handleRegisterSubmit={handleRegisterSubmit}
+                requestError={requestError}
               />
             </Route>
 
             <Route path="/signin">
               <PageLogin
                 handleAuthorizeSubmit={handleAuthorizeSubmit}
+                requestError={requestError}
               />
             </Route>
 

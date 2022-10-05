@@ -1,66 +1,73 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from "react-router-dom";
 
 import Form from '../Form/Form';
+import validations from '../../utils/validations';
 
 function FormLogin(props) {
-  const { handleAuthorizeSubmit } = props;
+  const { handleAuthorizeSubmit, requestError } = props;
+  const {
+    register,
+    formState: {
+      errors,
+      isValid,
+    },
+    watch,
+    handleSubmit,
+    reset,
+  } = useForm({
+    mode: 'onChange',
+  });
 
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
+  const {
+    required:requiredRules,
+    email: emailRules
+  } = validations;
+  const [ formEmail, formPassword ] = watch(['email', 'password']);
 
-  const submit = "Войти";
-  const cta = 'Ещё не зарегистрированы?';
-  const link = { url: '/signup', text: 'Регистрация' };
+  function onSubmit() {
+    handleAuthorizeSubmit(formEmail, formPassword);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-
-    if (name === 'email') {
-      setEmail(value);
-    }
-
-    if (name === 'password') {
-      setPassword(value);
-    }
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-
-    handleAuthorizeSubmit(email, password);
+    reset();
   }
 
   return (
     <Form
-      submit={submit}
-      cta={cta}
-      link={link}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <label className="form__item">
         <span className="form__label">E-mail</span>
         <input
-          className="form__field"
+          {...register('email', {
+            required: requiredRules,
+            pattern: emailRules.pattern,
+          })}
+          className={`form__field ${errors?.email ? 'form__field_type_error' : ''}`}
           type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-          required
         />
-        <span className="form__field-error"></span>
+
+        { errors?.email && <span className="form__field-error">{ errors?.email?.message }</span> }
       </label>
       <label className="form__item">
         <span className="form__label">Пароль</span>
         <input
-          className="form__field form__field_type_error"
+          {...register('password', {
+            required: requiredRules,
+          })}
+          className={`form__field ${errors?.password ? 'form__field_type_error' : ''}`}
           type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-          required
         />
-        <span className="form__field-error">Что-то пошло не так...</span>
+        { errors?.password && <span className="form__field-error">{ errors?.password?.message }</span> }
       </label>
+
+      <div className="form__error">{requestError}</div>
+
+      <button className="form__submit" disabled={!isValid}>Войти</button>
+
+      <p className="form__cta">
+        Ещё не зарегистрированы?
+        <Link to="/signup" className="form__cta-link">Регистрация</Link>
+      </p>
     </Form>
   );
 }

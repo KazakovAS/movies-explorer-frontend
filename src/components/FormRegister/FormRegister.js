@@ -1,83 +1,89 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from "react-router-dom";
 
 import Form from '../Form/Form';
+import validations from '../../utils/validations';
 
 function FormRegister(props) {
-  const { handleRegisterSubmit } = props;
+  const { handleRegisterSubmit, requestError } = props;
+  const {
+    register,
+    formState: {
+      errors,
+      isValid,
+    },
+    watch,
+    handleSubmit,
+    // reset,
+  } = useForm({
+    mode: 'onChange',
+  });
 
-  const [ name, setName ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
+  const {
+    required:requiredRules,
+    name: nameRules,
+    email: emailRules
+  } = validations;
+  const [ formName, formEmail, formPassword ] = watch(['name', 'email', 'password']);
 
-  const submit = "Зарегистрироваться";
-  const cta = 'Уже зарегистрированы?';
-  const link = { url: '/signin', text: 'Войти' };
+  function onSubmit() {
+    handleRegisterSubmit(formName, formEmail, formPassword);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-
-    if (name === 'name') {
-      setName(value);
-    }
-
-    if (name === 'email') {
-      setEmail(value);
-    }
-
-    if (name === 'password') {
-      setPassword(value);
-    }
-  }
-
-  function onSubmit(e) {
-    e.preventDefault();
-
-    handleRegisterSubmit(name, email, password);
+    // reset();
   }
 
   return (
     <Form
-      onSubmit={onSubmit}
-      submit={submit}
-      cta={cta}
-      link={link}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <label className="form__item">
         <span className="form__label">Имя</span>
         <input
-          className="form__field"
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          required
+          {...register('name', {
+            required: requiredRules,
+            minLength: nameRules.minLength,
+            maxLength: nameRules.maxLength,
+            pattern: nameRules.pattern,
+          })}
+          className={`form__field ${errors?.name ? 'form__field_type_error' : ''}`}
+          type="name"
         />
-        <span className="form__field-error"></span>
+
+        { errors?.name && <span className="form__field-error">{ errors?.name?.message }</span> }
       </label>
       <label className="form__item">
         <span className="form__label">E-mail</span>
         <input
-          className="form__field form__field_type_error"
+          {...register('email', {
+            required: requiredRules,
+            pattern: emailRules.pattern,
+          })}
+          className={`form__field ${errors?.email ? 'form__field_type_error' : ''}`}
           type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-          required
         />
-        <span className="form__field-error">Что-то пошло не так...</span>
+
+        { errors?.email && <span className="form__field-error">{ errors?.email?.message }</span> }
       </label>
       <label className="form__item">
         <span className="form__label">Пароль</span>
         <input
-          className="form__field form__field_type_error"
+          {...register('password', {
+            required: requiredRules,
+          })}
+          className={`form__field ${errors?.password ? 'form__field_type_error' : ''}`}
           type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-          required
         />
-        <span className="form__field-error">Что-то пошло не так...</span>
+        { errors?.password && <span className="form__field-error">{ errors?.password?.message }</span> }
       </label>
+
+      <div className="form__error">{requestError}</div>
+
+      <button className="form__submit" disabled={!isValid}>Зарегистрироваться</button>
+
+      <p className="form__cta">
+        Уже зарегистрированы?
+        <Link to="/signin" className="form__cta-link">Войти</Link>
+      </p>
     </Form>
   );
 }

@@ -73,6 +73,11 @@
   opacity: .6;
 }
 
+.form__submit:disabled {
+  background-color: #F5F5F5;
+  color: #000000;
+}
+
 .form__cta {
   font-size: 12px;
   line-height: 15px;

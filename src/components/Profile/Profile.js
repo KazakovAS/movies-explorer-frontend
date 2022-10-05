@@ -1,6 +1,8 @@
 import './Profile.css';
 
-function Profile() {
+function Profile(props) {
+  const { handleSignOutClick } = props;
+
   return (
     <section className="profile">
       <div className="profile__wrapper">
@@ -22,7 +24,10 @@ function Profile() {
             Редактировать
           </button>
 
-          <button className="controls-profile__item controls-profile__item_type_logout">
+          <button
+            className="controls-profile__item controls-profile__item_type_logout"
+            onClick={handleSignOutClick}
+          >
             Выйти из аккаунта
           </button>
         </div>

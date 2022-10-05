@@ -2,12 +2,15 @@ import Header from '../components/Header/Header';
 import Content from '../components/Content/Content';
 import Profile from '../components/Profile/Profile';
 
-function PageProfile() {
+function PageProfile(props) {
+  const { handleSignOutClick } = props;
   return (
     <>
       <Header />
       <Content>
-        <Profile />
+        <Profile
+          handleSignOutClick={handleSignOutClick}
+        />
       </Content>
     </>
   );
