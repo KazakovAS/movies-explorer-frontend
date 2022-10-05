@@ -6,7 +6,7 @@ import './Profile.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Profile(props) {
-  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, responseError } = props;
+  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, serverResponse } = props;
 
   const { currentUser } = useContext(CurrentUserContext);
 
@@ -19,7 +19,7 @@ function Profile(props) {
           handleEditProfileSubmit={handleEditProfileSubmit}
           handleSignOutClick={handleSignOutClick}
           isProcessing={isProcessing}
-          responseError={responseError}
+          serverResponse={serverResponse}
         />
       </div>
     </section>

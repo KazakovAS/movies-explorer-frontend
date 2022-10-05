@@ -8,9 +8,10 @@ import validations from '../../utils/validations';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function FormProfile(props) {
-  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, responseError } = props;
+  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, serverResponse } = props;
 
   const { currentUser } = useContext(CurrentUserContext);
+
   const {
     register,
     formState: {
@@ -23,8 +24,8 @@ function FormProfile(props) {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      profileName: currentUser.name,
-      profileEmail: currentUser.email,
+      profileName: localStorage.getItem('name'),
+      profileEmail: localStorage.getItem('email'),
     },
   });
   const [ profileName, profileEmail ] = watch(['profileName', 'profileEmail']);
@@ -33,6 +34,8 @@ function FormProfile(props) {
     name: nameRules,
     email: emailRules
   } = validations;
+
+  console.log(serverResponse.status)
 
   function onSubmit() {
     handleEditProfileSubmit(profileName, profileEmail, localStorage.getItem('jwt'));
@@ -70,7 +73,17 @@ function FormProfile(props) {
       </label>
 
       <div className="profile-form__controls form__controls">
-        <div className="form__error">{responseError}</div>
+        { serverResponse.status !== ''
+          && <div
+                className={`form__server-response
+                  ${serverResponse.status === 'done'
+                    ? 'form__server-response_type_complete'
+                    : 'form__server-response_type_error'
+                }`}
+              >
+                { serverResponse.message }
+              </div>
+        }
 
         <button
           className="form__controls-item"

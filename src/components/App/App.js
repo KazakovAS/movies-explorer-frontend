@@ -22,7 +22,7 @@ function App() {
   const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
   const [ loggedIn, setLoggedIn ] = useState(false);
   const [ isProcessing, setIsProcessing ] = useState(false);
-  const [ responseError, setResponseError ] = useState('');
+  const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
   useEffect(() => {
     checkAuth();
@@ -41,10 +41,11 @@ function App() {
       })
       .finally(() => {
         setIsProcessing(false);
+        resetServerResponse();
       })
       .catch((err) => {
         setIsProcessing(false);
-        setResponseError(err.message);
+        setServerResponse({ status: 'error', message: err.message});
       });
   }
 
@@ -61,10 +62,11 @@ function App() {
       })
       .finally(() => {
         setIsProcessing(false);
+        resetServerResponse();
       })
       .catch((err) => {
         setIsProcessing(false);
-        setResponseError(err.message);
+        setServerResponse({ status: 'error', message: err.message});
       });
   }
 
@@ -74,13 +76,15 @@ function App() {
     mainApi.editProfile(name, email, token)
       .then((res) => {
         setUserData(res);
+        setServerResponse({ status: 'done', message: 'Готово' });
       })
       .finally(() => {
         setIsProcessing(false);
+        resetServerResponse();
       })
       .catch((err) => {
         setIsProcessing(false);
-        setResponseError(err.message);
+        setServerResponse({ status: 'error', message: err.message});
       });
   }
 
@@ -97,7 +101,7 @@ function App() {
         setUserData(res);
       })
       .catch((err) => {
-        setResponseError(err.message);
+        setServerResponse(err.message);
       });
   }
 
@@ -111,6 +115,12 @@ function App() {
     if (localStorage.getItem('jwt')) {
       setLoggedIn(true);
     }
+  }
+
+  function resetServerResponse() {
+    setTimeout(() => {
+      setServerResponse({ status: '', message: '' });
+    }, 2000);
   }
 
   return (
@@ -138,7 +148,7 @@ function App() {
               handleEditProfileSubmit={handleEditProfileSubmit}
               handleSignOutClick={handleSignOutClick}
               isProcessing={isProcessing}
-              responseError={responseError}
+              serverResponse={serverResponse}
             />
 
             <Route path="/signup">
@@ -147,7 +157,7 @@ function App() {
                 : <PageRegister
                     handleRegisterSubmit={handleRegisterSubmit}
                     isProcessing={isProcessing}
-                    responseError={responseError}
+                    serverResponse={serverResponse}
                   />}
             </Route>
 
@@ -157,7 +167,7 @@ function App() {
                 : <PageLogin
                     handleAuthorizeSubmit={handleAuthorizeSubmit}
                     isProcessing={isProcessing}
-                    responseError={responseError}
+                    serverResponse={serverResponse}
                   />}
             </Route>
 

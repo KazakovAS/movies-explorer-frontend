@@ -3,7 +3,7 @@ import Content from '../components/Content/Content';
 import Profile from '../components/Profile/Profile';
 
 function PageProfile(props) {
-  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, responseError } = props;
+  const { handleEditProfileSubmit, handleSignOutClick, isProcessing, serverResponse } = props;
   return (
     <>
       <Header />
@@ -12,7 +12,7 @@ function PageProfile(props) {
           handleEditProfileSubmit={handleEditProfileSubmit}
           handleSignOutClick={handleSignOutClick}
           isProcessing={isProcessing}
-          responseError={responseError}
+          serverResponse={serverResponse}
         />
       </Content>
     </>

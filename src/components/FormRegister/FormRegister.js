@@ -5,7 +5,7 @@ import Form from '../Form/Form';
 import validations from '../../utils/validations';
 
 function FormRegister(props) {
-  const { handleRegisterSubmit, isProcessing, responseError } = props;
+  const { handleRegisterSubmit, isProcessing, serverResponse } = props;
   const {
     register,
     formState: {
@@ -78,7 +78,17 @@ function FormRegister(props) {
 
 
       <div className="form__controls">
-        <div className="form__error">{responseError}</div>
+        { serverResponse.status !== ''
+        && <div
+          className={`form__server-response
+                ${serverResponse.status === 'done'
+            ? 'form__server-response_type_complete'
+            : 'form__server-response_type_error'
+          }`}
+        >
+          { serverResponse.message }
+        </div>
+        }
         <button className="form__submit" disabled={!isValid || isProcessing}>Зарегистрироваться</button>
         <p className="form__cta">
           Уже зарегистрированы?

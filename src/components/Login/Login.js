@@ -4,7 +4,7 @@ import FormLogin from "../FormLogin/FormLogin";
 import './Login.css';
 
 function Login(props) {
-  const { handleAuthorizeSubmit, isProcessing, responseError } = props;
+  const { handleAuthorizeSubmit, isProcessing, serverResponse } = props;
 
   const heading = "Рады видеть!";
 
@@ -15,7 +15,7 @@ function Login(props) {
         <FormLogin
           handleAuthorizeSubmit={handleAuthorizeSubmit}
           isProcessing={isProcessing}
-          responseError={responseError}
+          serverResponse={serverResponse}
         />
       </div>
     </section>

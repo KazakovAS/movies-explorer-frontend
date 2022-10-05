@@ -134,12 +134,19 @@
   font-weight: 500;
 }
 
-.form__error {
+.form__server-response {
   font-size: 12px;
   line-height: 15px;
-  color: #EE3465;
   text-align: center;
   margin-bottom: 20px;
+}
+
+.form__server-response_type_complete {
+  color: #2BE080;
+}
+
+.form__server-response_type_error {
+  color: #EE3465;
 }
 
 @media (min-width: 768px) {
