@@ -24,28 +24,25 @@ function FormProfile(props) {
     // reset,
   } = useForm({
     mode: 'onChange',
-    defaultValue: {
-      profileName: currentUser.name,
-      profileEmail: currentUser.email,
+    defaultValues: {
+      name: localStorage.getItem('name'),
+      email: localStorage.getItem('email'),
     },
   });
-  const [ profileName, profileEmail ] = watch(['profileName', 'profileEmail']);
+
+  const [ name, email ] = watch(['name', 'email']);
+
   const {
     required: requiredRules,
     name: nameRules,
     email: emailRules
   } = validations;
 
-  function onSubmit() {
-    handleEditProfile(profileName, profileEmail);
+  function onSubmit(data) {
+    handleEditProfile(data);
 
     // reset();
   }
-
-  useEffect(() => {
-    console.log(currentUser.name, currentUser.email)
-    console.log(profileName, profileEmail)
-  }, [currentUser, profileName, profileEmail])
 
   return (
     <Form
@@ -55,23 +52,23 @@ function FormProfile(props) {
       <label className="profile-form__item">
         <span className="profile-form__label">Имя</span>
         <input
-          {...register('profileName', {
+          {...register('name', {
             required: requiredRules,
             minLength: nameRules.minLength,
             maxLength: nameRules.maxLength,
             pattern: nameRules.pattern,
           })}
-          className={`profile-form__field ${errors?.profileName ? 'form__field_type_error' : ''}`}
+          className={`profile-form__field ${errors?.name ? 'form__field_type_error' : ''}`}
         />
       </label>
       <label className="profile-form__item">
         <span className="profile-form__label">E-mail</span>
         <input
-          {...register('profileEmail', {
+          {...register('email', {
             required: requiredRules,
             pattern: emailRules.pattern,
           })}
-          className={`profile-form__field ${errors?.profileEmail ? 'form__field_type_error' : ''}`}
+          className={`profile-form__field ${errors?.email ? 'form__field_type_error' : ''}`}
           type="email"
         />
       </label>
@@ -94,8 +91,8 @@ function FormProfile(props) {
           disabled={
             !isValid
             || isProcessing
-            || (profileName === currentUser.name)
-            || (profileEmail === currentUser.email)
+            || (name === currentUser.name
+              && email === currentUser.email)
           }
         >
           Редактировать
@@ -108,8 +105,6 @@ function FormProfile(props) {
         >
           Выйти из аккаунта
         </button>
-
-        {/*<button onClick={test} type="button">123123</button>*/}
       </div>
     </Form>
   );

@@ -35,7 +35,7 @@ function App() {
       //   email: localStorage.getItem('email'),
       // });
       // getContent();
-      // getCurrentUser();
+      getCurrentUser();
     }
 
   }, [loggedIn]);
@@ -64,7 +64,6 @@ function App() {
       .then(res => {
         if (res.token) {
           setLoggedIn(true);
-          // getCurrentUser(res.token);
           localStorage.setItem('jwt', res.token);
           history.push('/movies');
         }
@@ -115,7 +114,7 @@ function App() {
   }
 
   function setUserData(data) {
-    setCurrentUser({ name: data.name, email: data.email });
+    setCurrentUser(data);
     localStorage.setItem('name', data.name);
     localStorage.setItem('email', data.email);
   }
