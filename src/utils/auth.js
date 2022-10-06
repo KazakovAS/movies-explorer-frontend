@@ -5,6 +5,7 @@ class Auth extends Api {
   constructor(api) {
     super();
 
+    this._userToken = localStorage.getItem('jwt');
     this._api = api;
   }
 
@@ -39,10 +40,10 @@ class Auth extends Api {
       })
   }
 
-  checkToken(token) {
+  checkToken() {
     return fetch(`${this._api}/users/me`, {
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${this._userToken}`,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },

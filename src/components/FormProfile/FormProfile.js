@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 
 import Form from "../Form/Form";
@@ -12,6 +12,10 @@ function FormProfile(props) {
 
   const { currentUser } = useContext(CurrentUserContext);
 
+  useEffect(() => {
+    console.log(currentUser)
+  }, [currentUser])
+
   const {
     register,
     formState: {
@@ -24,8 +28,10 @@ function FormProfile(props) {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      profileName: localStorage.getItem('name'),
-      profileEmail: localStorage.getItem('email'),
+      // profileName: localStorage.getItem('name'),
+      // profileEmail: localStorage.getItem('email'),
+      profileName: currentUser.name,
+      profileEmail: currentUser.email,
     },
   });
   const [ profileName, profileEmail ] = watch(['profileName', 'profileEmail']);

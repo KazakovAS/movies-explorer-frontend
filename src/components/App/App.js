@@ -17,11 +17,10 @@ import './App.css';
 import auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
-import Movies from "../Movies/Movies";
 
 function App() {
   const history = useHistory();
-  const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
+  const [ currentUser, setCurrentUser ] = useState({});
   const [ loggedIn, setLoggedIn ] = useState(!!localStorage.getItem("jwt"));
   const [ movies, setMovies ] = useState([]);
   const [ savedMovies, setSavedMovies ] = useState([]);
@@ -29,12 +28,12 @@ function App() {
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
   useEffect(() => {
-    tokenCheck();
+    checkToken();
     if (loggedIn) {
-      setCurrentUser({
-        name: localStorage.getItem('name'),
-        email: localStorage.getItem('email'),
-      });
+      // setCurrentUser({
+      //   name: localStorage.getItem('name'),
+      //   email: localStorage.getItem('email'),
+      // });
       // getContent();
     }
 
@@ -64,7 +63,7 @@ function App() {
       .then(res => {
         if (res.token) {
           setLoggedIn(true);
-          getCurrentUser(res.token);
+          // getCurrentUser(res.token);
           history.push('/movies');
         }
       })
@@ -78,10 +77,10 @@ function App() {
       });
   }
 
-  function handleEditProfile(name, email, token) {
+  function handleEditProfile(name, email) {
     setIsProcessing(true);
 
-    mainApi.editProfile(name, email, token)
+    mainApi.editProfile(name, email)
       .then((res) => {
         setUserData(res);
         setServerResponse({ status: 'done', message: 'Готово' });
@@ -103,8 +102,8 @@ function App() {
     history.push('/');
   }
 
-  function getCurrentUser(token) {
-    mainApi.getProfile(token)
+  function getCurrentUser() {
+    mainApi.getProfile()
       .then(res => {
         setUserData(res);
       })
@@ -119,7 +118,7 @@ function App() {
     localStorage.setItem('email', data.email);
   }
 
-  function tokenCheck() {
+  function checkToken() {
     const token = localStorage.getItem("jwt");
 
     if (token) {

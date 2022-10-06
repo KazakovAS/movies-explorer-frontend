@@ -5,23 +5,24 @@ class MainApi extends Api {
   constructor(api) {
     super();
 
+    this._userToken = localStorage.getItem('jwt');
     this._api = api;
   }
 
-  getProfile(token) {
+  getProfile() {
     return fetch(`${this._api}/users/me`, {
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${this._userToken}`,
       }
     })
       .then(res => super._handleError(res))
   }
 
-  editProfile(name, email, token) {
+  editProfile(name, email) {
     return fetch(`${this._api}/users/me`, {
       method: "PATCH",
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${this._userToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ name, email })
@@ -29,10 +30,10 @@ class MainApi extends Api {
       .then(res => super._handleError(res))
   }
 
-  getSavedMovies(token) {
+  getSavedMovies() {
     return fetch(`${this._api}/movies`, {
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${this._userToken}`,
       }
     })
       .then(res => super._handleError(res))
@@ -49,13 +50,12 @@ class MainApi extends Api {
     nameRU,
     nameEN,
     thumbnail,
-    movieId,
-    token
+    movieId
   ) {
     return fetch(`${this._api}/movies`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${this._userToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -75,11 +75,11 @@ class MainApi extends Api {
       .then(res => super._handleError(res))
   }
 
-  deleteMovie(id, token) {
+  deleteMovie(id) {
     return fetch(`${this._api}/movies/${id}`, {
       method: "DELETE",
       headers: {
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${this._userToken}`,
         'Content-Type': 'application/json'
       }
     })
