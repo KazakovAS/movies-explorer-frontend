@@ -13,52 +13,63 @@ import './Movies.css';
 function Movies(props) {
   const { savedMovies, handleSaveMovie, handleDeleteMovie, isProcessing, setIsProcessing, setServerResponse, serverResponse } = props;
 
-  const [ movies, setMovies ] = useState([]);
-  const [ searchesMovies, setSearchesMovies ] = useState([]);
-
-  const [ shortMovies, setShortMovies ] = useState(false);
-  const [ filteredMovies, setFilteredMovies ] = useState([]);
+  const [ movies, setMovies ] = useState(JSON.parse(localStorage.getItem('movies')));
   const [ notFound, setNotFound ] = useState(false);
+  const [ shortMoviesStatus, setShortMoviesStatus ] = useState(true);
 
-  function handleSetFilteredMovies(movies, userRequest, shortMovies) {
-    const moviesList = filterMovies(movies, userRequest, shortMovies);
+  const [ searchesMovies, setSearchesMovies ] = useState([]);
+  const [ filteredShortMovies, setFilteredShortMovies ] = useState([]);
 
-    moviesList.length === 0
+  function handleNotFound(movies) {
+    movies.length === 0
       ? setNotFound(true)
-      : setNotFound(false);
+      : setNotFound(false)
+  }
 
-    shortMovies
-      ? setFilteredMovies(filterShortMovies(moviesList))
-      : setFilteredMovies(moviesList)
+  function fillMoviesList(userRequest) {
+    const moviesList = filterMovies(movies, userRequest);
 
-    // setFilteredMovies(shortMovies ? filterShortMovies(moviesList) : moviesList);
-    localStorage.setItem(`filteredMovies`, JSON.stringify(moviesList));
-    // localStorage.setItem(``, JSON.stringify(moviesList));
+    handleNotFound(moviesList);
+
+    setSearchesMovies(moviesList);
+    localStorage.setItem('searchesMovies', JSON.stringify(searchesMovies));
 
 
-    // setSearchesMovies(shortMoviesCheckbox ? filterShortMovies(moviesList) : moviesList);
+    if (shortMoviesStatus) {
+      const shortMoviesList = filterShortMovies(searchesMovies);
+
+      handleNotFound(shortMoviesList);
+
+      setFilteredShortMovies(shortMoviesList);
+      localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies));
+    }
   }
 
   function handleSearchForm(userRequest) {
-    setIsProcessing(true);
+    setNotFound(false);
 
-    // localStorage.setItem(`movieSearch`, userRequest);
-    // localStorage.setItem(`shortMoviesSearch`, shortMoviesCheckbox);
-
-    moviesApi.getMovies()
-      .then((res) => {
-        localStorage.setItem('movies', JSON.stringify(res));
-        setMovies(res);
-      })
-      .catch((err) => {
-        setServerResponse({ status: 'error', message: err.message});
-      })
-      .finally(() => {
-        setIsProcessing(false);
-      });
-
-    handleSetFilteredMovies(movies, userRequest, shortMovies);
+    fillMoviesList(userRequest);
   }
+
+  useEffect(() => {
+    if (!localStorage.getItem('movies')) {
+      moviesApi.getMovies()
+        .then((res) => {
+          setMovies(res);
+          localStorage.setItem('movies', JSON.stringify(res));
+        })
+        .catch((err) => {
+          setServerResponse({ status: 'error', message: err.message});
+        })
+        .finally(() => {
+          setIsProcessing(false);
+        });
+    }
+  }, [movies]);
+
+  useEffect(() => {
+    // fillMoviesList();
+  }, [searchesMovies, filteredShortMovies, notFound, handleSearchForm])
 
   return (
     <section className="movies">
@@ -74,7 +85,7 @@ function Movies(props) {
           { notFound
             ? <NoResults />
             : <MoviesCardList
-                movies={filteredMovies}
+                movies={ shortMoviesStatus ? filteredShortMovies : searchesMovies }
                 savedMovies={savedMovies}
                 handleSaveMovie={handleSaveMovie}
                 handleDeleteMovie={handleDeleteMovie}
