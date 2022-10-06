@@ -38,8 +38,8 @@ function FormProfile(props) {
     email: emailRules
   } = validations;
 
-  function onSubmit(data) {
-    handleEditProfile(data);
+  function onSubmit() {
+    handleEditProfile(name, email);
 
     // reset();
   }

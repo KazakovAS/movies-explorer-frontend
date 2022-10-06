@@ -44,16 +44,15 @@ function App() {
     setIsProcessing(true);
 
     auth.register(name, email, password)
-      .then(() => {
-        handleAuthorize(email, password);
+      .then((data) => {
+        if (data._id) handleAuthorize(email, password);
+      })
+      .catch((err) => {
+        setServerResponse({ status: 'error', message: err.message});
       })
       .finally(() => {
         setIsProcessing(false);
         resetServerResponse();
-      })
-      .catch((err) => {
-        setIsProcessing(false);
-        setServerResponse({ status: 'error', message: err.message});
       });
   }
 
@@ -68,38 +67,37 @@ function App() {
           history.push('/movies');
         }
       })
+      .catch((err) => {
+        setServerResponse({ status: 'error', message: err.message});
+      })
       .finally(() => {
         setIsProcessing(false);
         resetServerResponse();
-      })
-      .catch((err) => {
-        setIsProcessing(false);
-        setServerResponse({ status: 'error', message: err.message});
       });
   }
 
   function handleEditProfile(name, email) {
     setIsProcessing(true);
+    console.log(name);
 
     mainApi.editProfile(name, email)
       .then((res) => {
         setUserData(res);
         setServerResponse({ status: 'done', message: 'Готово' });
       })
+      .catch((err) => {
+        setServerResponse({ status: 'error', message: err.message});
+      })
       .finally(() => {
         setIsProcessing(false);
         resetServerResponse();
-      })
-      .catch((err) => {
-        setIsProcessing(false);
-        setServerResponse({ status: 'error', message: err.message});
       });
   }
 
   function handleSignOut() {
     localStorage.clear();
     setLoggedIn(false);
-    setCurrentUser({ name: '', email: '' });
+    setCurrentUser({});
     history.push('/');
   }
 
@@ -147,21 +145,38 @@ function App() {
     }, 2000);
   }
 
-  function getMovies() {
+  // function filterMovies(moviesList) {
+  //   const mainList = JSON.parse(localStorage.getItem(${moviesList}))
+  //   try {
+  //     const list = movieFilter(mainList, nameList);
+  //     savedMoviesFilter(list, savedMovies, currentUser._id);
+  //     nameList === 'movies' ? setMovies(list) : setSavedMovies(list);
+  //   } catch (err) {
+  //     setError(err.messsage)
+  //   }
+  // }
+
+  function getMovies(type) {
     setIsProcessing(true);
+
+    if (localStorage.getItem('movies')) {
+      setIsProcessing(false);
+      // filterMovies(type);
+
+      return;
+    }
 
     moviesApi.getMovies()
       .then((res) => {
-        setMovies(res);
         localStorage.setItem('movies', JSON.stringify(res));
+        // filterMovies(type);
+      })
+      .catch((err) => {
+        setServerResponse({ status: 'error', message: err.message});
       })
       .finally(() => {
         setIsProcessing(false);
         resetServerResponse();
-      })
-      .catch((err) => {
-        setIsProcessing(false);
-        setServerResponse({ status: 'error', message: err.message});
       });
   }
 
