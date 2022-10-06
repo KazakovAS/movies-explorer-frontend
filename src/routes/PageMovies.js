@@ -4,13 +4,14 @@ import Movies from '../components/Movies/Movies';
 import Footer from '../components/Footer/Footer';
 
 function PageMovies(props) {
-  const { handleSearchForm, isProcessing, serverResponse } = props;
+  const { movies, handleSearchForm, isProcessing, serverResponse } = props;
 
   return (
     <>
       <Header />
       <Content>
         <Movies
+          movies={movies}
           handleSearchForm={handleSearchForm}
           isProcessing={isProcessing}
           serverResponse={serverResponse}

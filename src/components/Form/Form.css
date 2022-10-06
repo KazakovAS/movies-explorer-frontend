@@ -127,7 +127,6 @@
 
 .form__controls-item:disabled {
   cursor: default;
-  color: #EBEBEB;
 }
 
 .form__controls-item_type_logout {

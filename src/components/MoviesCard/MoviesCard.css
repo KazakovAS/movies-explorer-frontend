@@ -1,4 +1,5 @@
 .movies-card {
+  position: relative;
   background-color: #F9F9F9;
 }
 
@@ -23,6 +24,21 @@
   margin-bottom: 0;
 }
 
+.movies-card__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.movies-card__link::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 .movies-card__duration {
   display: block;
   font-size: 11px;
@@ -32,6 +48,8 @@
 }
 
 .movies-card__button {
+  position: relative;
+  z-index: 1;
   width: 14px;
   height: 12px;
   border: none;

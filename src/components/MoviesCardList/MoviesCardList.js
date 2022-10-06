@@ -2,31 +2,31 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 import './MoviesCardList.css';
 
-function MoviesCardList() {
+function MoviesCardList(props) {
+  const { movies } = props;
+
   return (
-    <ul className="movies-card-list">
-      <li className="movies-card-list__item">
-        <MoviesCard />
-      </li>
-      <li className="movies-card-list__item">
-        <MoviesCard />
-      </li>
-      <li className="movies-card-list__item">
-        <MoviesCard />
-      </li>
-      <li className="movies-card-list__item">
-        <MoviesCard />
-      </li>
-      <li className="movies-card-list__item">
-        <MoviesCard />
-      </li>
-      <li className="movies-card-list__item">
-        <MoviesCard />
-      </li>
-      <li className="movies-card-list__item">
-        <MoviesCard />
-      </li>
-    </ul>
+    <>
+      { movies.length > 0 &&
+        <>
+          <ul className="movies-card-list">
+            { movies.map(movie =>
+              <li
+                className="movies-card-list__item"
+                // key={ saved ? movie._id : movie.id }
+              >
+                <MoviesCard
+                  movie={movie}
+                  // saved={saved}
+                />
+              </li>
+            )}
+          </ul>
+
+          <button className="movies__add-more" type="button">Ещё</button>
+        </>
+      }
+    </>
   );
 }
 

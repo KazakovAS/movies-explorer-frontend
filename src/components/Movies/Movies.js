@@ -5,7 +5,7 @@ import Preloader from "../Preloader/Preloader";
 import './Movies.css';
 
 function Movies(props) {
-  const { handleSearchForm, isProcessing, serverResponse } = props;
+  const { movies, handleSearchForm, isProcessing, serverResponse } = props;
 
   return (
     <section className="movies">
@@ -15,12 +15,11 @@ function Movies(props) {
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />
-
         <>
           { isProcessing && <Preloader /> }
-          <MoviesCardList />
-
-          <button className="movies__add-more" type="button">Ещё</button>
+          <MoviesCardList
+            movies={movies}
+          />
         </>
       </div>
     </section>

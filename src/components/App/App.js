@@ -17,13 +17,14 @@ import './App.css';
 import auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
+import Movies from "../Movies/Movies";
 
 function App() {
   const history = useHistory();
   const [ currentUser, setCurrentUser ] = useState({ name: '', email: '' });
   const [ loggedIn, setLoggedIn ] = useState(!!localStorage.getItem("jwt"));
-  const [movies, setMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [ movies, setMovies ] = useState([]);
+  const [ savedMovies, setSavedMovies ] = useState([]);
   const [ isProcessing, setIsProcessing ] = useState(false);
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
@@ -151,8 +152,8 @@ function App() {
 
     moviesApi.getMovies()
       .then((res) => {
-        const result = res.slice(0, 7);
-        console.log(result);
+        setMovies(res);
+        localStorage.setItem('movies', JSON.stringify(res));
       })
       .finally(() => {
         setIsProcessing(false);
@@ -181,6 +182,7 @@ function App() {
               path="/movies"
               component={PageMovies}
               loggedIn={loggedIn}
+              movies={movies}
               handleSearchForm={handleSearchForm}
               isProcessing={isProcessing}
               serverResponse={serverResponse}
