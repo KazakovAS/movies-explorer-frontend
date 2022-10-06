@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Form from "../Form/Form";
@@ -16,18 +17,19 @@ function SearchForm(props) {
       isValid,
     },
     watch,
+    getValues,
     handleSubmit,
     // reset,
   } = useForm({
     mode: 'onChange',
   });
-  const [ movieName ] = watch(['movieName']);
+  const [ movieName ] = watch(['movie']);
   const {
     movie: movieRules,
   } = validations;
 
   function onSubmit() {
-    handleSearchForm();
+    handleSearchForm(movieName);
 
     // reset();
   }

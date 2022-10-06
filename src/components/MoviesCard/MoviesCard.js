@@ -4,8 +4,16 @@ import { convertingTime } from '../../utils/helpers';
 import './MoviesCard.css';
 
 function MoviesCard(props) {
-  const { movie, saved } = props;
+  const { movie, saved, handleSaveMovie, handleDeleteMovie } = props;
   const { nameRU, image, duration, liked, trailerLink, owner } = movie;
+
+  function onLike() {
+    handleSaveMovie(movie);
+  }
+
+  function onDelete() {
+    handleDeleteMovie(movie);
+  }
 
   return (
     <article className="movies-card">
@@ -29,7 +37,11 @@ function MoviesCard(props) {
         </div>
 
         {/*<button className="movies-card__button movies-card__button_type_default" type="button" />*/}
-        <button className="movies-card__button movies-card__button_type_liked" type="button" />
+        <button
+          className="movies-card__button movies-card__button_type_liked"
+          type="button"
+          onClick={onLike}
+        />
         {/*<button className="movies-card__button movies-card__button_type_delete" type="button" />*/}
       </div>
     </article>

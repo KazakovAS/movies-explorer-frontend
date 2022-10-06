@@ -18,8 +18,6 @@ class MainApi extends Api {
   }
 
   editProfile(name, email) {
-    console.log(name, email);
-
     return fetch(`${this._api}/users/me`, {
       method: "PATCH",
       headers: {
@@ -40,7 +38,7 @@ class MainApi extends Api {
       .then(res => super._handleError(res))
   }
 
-  createMovie(
+  saveMovie(
     country,
     director,
     duration,

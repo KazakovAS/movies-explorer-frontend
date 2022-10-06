@@ -16,13 +16,11 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
-import moviesApi from "../../utils/MoviesApi";
 
 function App() {
   const history = useHistory();
   const [ currentUser, setCurrentUser ] = useState({});
   const [ loggedIn, setLoggedIn ] = useState(!!localStorage.getItem("jwt"));
-  const [ movies, setMovies ] = useState([]);
   const [ savedMovies, setSavedMovies ] = useState([]);
   const [ isProcessing, setIsProcessing ] = useState(false);
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
@@ -30,15 +28,22 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       checkToken();
-      // setCurrentUser({
-      //   name: localStorage.getItem('name'),
-      //   email: localStorage.getItem('email'),
-      // });
-      // getContent();
       getCurrentUser();
     }
 
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn && currentUser) {
+      mainApi.getSavedMovies()
+        .then(data => {
+          const UserMovies = data.filter(movie => movie.owner === currentUser._id);
+
+          setSavedMovies(UserMovies);
+        })
+        .catch(console.error);
+    }
+  }, [currentUser, loggedIn]);
 
   function handleRegister(name, email, password) {
     setIsProcessing(true);
@@ -78,7 +83,6 @@ function App() {
 
   function handleEditProfile(name, email) {
     setIsProcessing(true);
-    console.log(name);
 
     mainApi.editProfile(name, email)
       .then((res) => {
@@ -145,43 +149,22 @@ function App() {
     }, 2000);
   }
 
-  // function filterMovies(moviesList) {
-  //   const mainList = JSON.parse(localStorage.getItem(${moviesList}))
-  //   try {
-  //     const list = movieFilter(mainList, nameList);
-  //     savedMoviesFilter(list, savedMovies, currentUser._id);
-  //     nameList === 'movies' ? setMovies(list) : setSavedMovies(list);
-  //   } catch (err) {
-  //     setError(err.messsage)
-  //   }
-  // }
-
-  function getMovies(type) {
-    setIsProcessing(true);
-
-    if (localStorage.getItem('movies')) {
-      setIsProcessing(false);
-      // filterMovies(type);
-
-      return;
-    }
-
-    moviesApi.getMovies()
-      .then((res) => {
-        localStorage.setItem('movies', JSON.stringify(res));
-        // filterMovies(type);
-      })
-      .catch((err) => {
-        setServerResponse({ status: 'error', message: err.message});
-      })
-      .finally(() => {
-        setIsProcessing(false);
-        resetServerResponse();
-      });
+  function handleSaveMovie(movie) {
+    mainApi.saveMovie(movie)
+      .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
+      .catch(console.error);
   }
 
-  function handleSearchForm() {
-    getMovies();
+  function handleDeleteMovie(movie) {
+    const savedMovie = savedMovies.find(item => item.movieId === movie.id || item.movieId === movie.movieId);
+
+    mainApi.deleteMovie(savedMovie._id)
+      .then(() => {
+        const newMovies = savedMovies.filter(m => !(movie.id === m.movieId || movie.movieId === m.movieId));
+
+        setSavedMovies(newMovies);
+      })
+      .catch(console.error);
   }
 
   return (
@@ -197,9 +180,12 @@ function App() {
               path="/movies"
               component={PageMovies}
               loggedIn={loggedIn}
-              movies={movies}
-              handleSearchForm={handleSearchForm}
+              savedMovies={savedMovies}
+              handleSaveMovie={handleSaveMovie}
+              handleDeleteMovie={handleDeleteMovie}
               isProcessing={isProcessing}
+              setIsProcessing={setIsProcessing}
+              setServerResponse={setServerResponse}
               serverResponse={serverResponse}
             />
 
@@ -207,6 +193,10 @@ function App() {
               path="/saved-movies"
               component={PageSavedMovies}
               loggedIn={loggedIn}
+              savedMovies={savedMovies}
+              handleDeleteMovie={handleDeleteMovie}
+              isProcessing={isProcessing}
+              serverResponse={serverResponse}
             />
 
             <ProtectedRoute

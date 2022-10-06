@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
 function MoviesCardList(props) {
-  const { movies } = props;
+  const { movies, saved, handleSaveMovie, handleDeleteMovie } = props;
 
   return (
     <>
@@ -17,7 +17,9 @@ function MoviesCardList(props) {
               >
                 <MoviesCard
                   movie={movie}
-                  // saved={saved}
+                  saved={saved}
+                  handleSaveMovie={handleSaveMovie}
+                  handleDeleteMovie={handleDeleteMovie}
                 />
               </li>
             )}

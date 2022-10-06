@@ -1,3 +1,5 @@
+import './NoResults.css';
+
 function NoResults() {
   return (
     <div className="no-results">

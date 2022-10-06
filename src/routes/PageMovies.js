@@ -4,16 +4,19 @@ import Movies from '../components/Movies/Movies';
 import Footer from '../components/Footer/Footer';
 
 function PageMovies(props) {
-  const { movies, handleSearchForm, isProcessing, serverResponse } = props;
+  const { savedMovies, handleSaveMovie, handleDeleteMovie, isProcessing, setIsProcessing, setServerResponse, serverResponse } = props;
 
   return (
     <>
       <Header />
       <Content>
         <Movies
-          movies={movies}
-          handleSearchForm={handleSearchForm}
+          savedMovies={savedMovies}
+          handleSaveMovie={handleSaveMovie}
+          handleDeleteMovie={handleDeleteMovie}
           isProcessing={isProcessing}
+          setIsProcessing={setIsProcessing}
+          setServerResponse={setServerResponse}
           serverResponse={serverResponse}
         />
       </Content>

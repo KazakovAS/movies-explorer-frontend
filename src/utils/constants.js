@@ -8,4 +8,6 @@ const MOVIES_DOMAIN = 'api.nomoreparties.co';
 const MOVIES_API = `https://${MOVIES_DOMAIN}/beatfilm-movies`;
 const MOVIES_IMAGES = `https://${MOVIES_DOMAIN}`;
 
-export { MAIN_API, MOVIES_API, MOVIES_IMAGES };
+const SHORTMOVIES_DURATION = 40;
+
+export { MAIN_API, MOVIES_API, MOVIES_IMAGES, SHORTMOVIES_DURATION };
