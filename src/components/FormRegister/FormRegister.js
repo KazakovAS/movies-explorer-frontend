@@ -24,6 +24,7 @@ function FormRegister(props) {
     name: nameRules,
     email: emailRules
   } = validations;
+
   const [ formName, formEmail, formPassword ] = watch(['name', 'email', 'password']);
 
   function onSubmit() {

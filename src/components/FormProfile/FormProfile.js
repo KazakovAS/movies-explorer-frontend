@@ -3,18 +3,15 @@ import { useForm } from 'react-hook-form';
 
 import Form from "../Form/Form";
 
-import './FormProfile.css';
-import validations from '../../utils/validations';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import validations from '../../utils/validations';
+
+import './FormProfile.css';
 
 function FormProfile(props) {
   const { handleEditProfile, handleSignOut, isProcessing, serverResponse } = props;
 
   const { currentUser } = useContext(CurrentUserContext);
-
-  useEffect(() => {
-    console.log(currentUser)
-  }, [currentUser])
 
   const {
     register,
@@ -27,9 +24,7 @@ function FormProfile(props) {
     // reset,
   } = useForm({
     mode: 'onChange',
-    defaultValues: {
-      // profileName: localStorage.getItem('name'),
-      // profileEmail: localStorage.getItem('email'),
+    defaultValue: {
       profileName: currentUser.name,
       profileEmail: currentUser.email,
     },
@@ -42,10 +37,15 @@ function FormProfile(props) {
   } = validations;
 
   function onSubmit() {
-    handleEditProfile(profileName, profileEmail, localStorage.getItem('jwt'));
+    handleEditProfile(profileName, profileEmail);
 
     // reset();
   }
+
+  useEffect(() => {
+    console.log(currentUser.name, currentUser.email)
+    console.log(profileName, profileEmail)
+  }, [currentUser, profileName, profileEmail])
 
   return (
     <Form
@@ -94,8 +94,8 @@ function FormProfile(props) {
           disabled={
             !isValid
             || isProcessing
-            || (profileName === currentUser.name
-            && profileEmail === currentUser.email)
+            || (profileName === currentUser.name)
+            || (profileEmail === currentUser.email)
           }
         >
           Редактировать
@@ -108,6 +108,8 @@ function FormProfile(props) {
         >
           Выйти из аккаунта
         </button>
+
+        {/*<button onClick={test} type="button">123123</button>*/}
       </div>
     </Form>
   );

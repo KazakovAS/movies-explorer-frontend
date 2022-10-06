@@ -5,8 +5,6 @@ class Api {
       : res.json().then((data) => {
         throw new Error(`Ошибка ${res.status}: ${data.message}`);
       })
-      // ${res.status}: ${data.message}`);
-    // return res.ok ? res.json() : Promise.reject(res.status);
   }
 }
 

@@ -6,7 +6,6 @@ import './MoviesCard.css';
 function MoviesCard(props) {
   const { movie, saved } = props;
   const { nameRU, image, duration, liked, trailerLink, owner } = movie;
-  console.log(movie)
 
   return (
     <article className="movies-card">

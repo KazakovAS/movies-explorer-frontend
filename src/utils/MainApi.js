@@ -5,14 +5,13 @@ class MainApi extends Api {
   constructor(api) {
     super();
 
-    this._userToken = localStorage.getItem('jwt');
     this._api = api;
   }
 
   getProfile() {
     return fetch(`${this._api}/users/me`, {
       headers: {
-        authorization: `Bearer ${this._userToken}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
       }
     })
       .then(res => super._handleError(res))
@@ -22,7 +21,7 @@ class MainApi extends Api {
     return fetch(`${this._api}/users/me`, {
       method: "PATCH",
       headers: {
-        authorization: `Bearer ${this._userToken}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ name, email })
@@ -33,7 +32,7 @@ class MainApi extends Api {
   getSavedMovies() {
     return fetch(`${this._api}/movies`, {
       headers: {
-        authorization: `Bearer ${this._userToken}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
       }
     })
       .then(res => super._handleError(res))
@@ -55,7 +54,7 @@ class MainApi extends Api {
     return fetch(`${this._api}/movies`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${this._userToken}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -79,7 +78,7 @@ class MainApi extends Api {
     return fetch(`${this._api}/movies/${id}`, {
       method: "DELETE",
       headers: {
-        authorization: `Bearer ${this._userToken}`,
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
         'Content-Type': 'application/json'
       }
     })

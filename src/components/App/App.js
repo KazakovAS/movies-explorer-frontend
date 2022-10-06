@@ -28,13 +28,14 @@ function App() {
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
   useEffect(() => {
-    checkToken();
     if (loggedIn) {
+      checkToken();
       // setCurrentUser({
       //   name: localStorage.getItem('name'),
       //   email: localStorage.getItem('email'),
       // });
       // getContent();
+      // getCurrentUser();
     }
 
   }, [loggedIn]);
@@ -64,6 +65,7 @@ function App() {
         if (res.token) {
           setLoggedIn(true);
           // getCurrentUser(res.token);
+          localStorage.setItem('jwt', res.token);
           history.push('/movies');
         }
       })
@@ -122,7 +124,7 @@ function App() {
     const token = localStorage.getItem("jwt");
 
     if (token) {
-      auth.checkToken(token)
+      auth.checkToken()
         .then((res) => {
           if (res) {
             setLoggedIn(true);
