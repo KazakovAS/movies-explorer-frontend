@@ -15,32 +15,35 @@ function Movies(props) {
 
   const [ movies, setMovies ] = useState([]);
   const [ searchesMovies, setSearchesMovies ] = useState([]);
+
   const [ shortMovies, setShortMovies ] = useState(false);
   const [ filteredMovies, setFilteredMovies ] = useState([]);
   const [ notFound, setNotFound ] = useState(false);
 
-  function handleSetFilteredMovies(movies, userRequest, shortMoviesCheckbox) {
-    const moviesList = filterMovies(movies, userRequest, shortMoviesCheckbox);
+  function handleSetFilteredMovies(movies, userRequest, shortMovies) {
+    const moviesList = filterMovies(movies, userRequest, shortMovies);
 
-    if (moviesList.length === 0) {
-      setNotFound(true);
-      setIsProcessing(false);
-    } else {
-      setNotFound(false);
-    }
+    moviesList.length === 0
+      ? setNotFound(true)
+      : setNotFound(false);
 
-    setSearchesMovies(moviesList);
+    shortMovies
+      ? setFilteredMovies(filterShortMovies(moviesList))
+      : setFilteredMovies(moviesList)
 
-    setFilteredMovies(shortMoviesCheckbox ? filterShortMovies(moviesList) : moviesList);
+    // setFilteredMovies(shortMovies ? filterShortMovies(moviesList) : moviesList);
+    localStorage.setItem(`filteredMovies`, JSON.stringify(moviesList));
+    // localStorage.setItem(``, JSON.stringify(moviesList));
 
-    localStorage.setItem(`moviesFiltered`, JSON.stringify(moviesList));
+
+    // setSearchesMovies(shortMoviesCheckbox ? filterShortMovies(moviesList) : moviesList);
   }
 
   function handleSearchForm(userRequest) {
     setIsProcessing(true);
 
-    localStorage.setItem(`movieSearch`, userRequest);
-    // localStorage.setItem(`shortMoviesSearch`, shortMovies);
+    // localStorage.setItem(`movieSearch`, userRequest);
+    // localStorage.setItem(`shortMoviesSearch`, shortMoviesCheckbox);
 
     moviesApi.getMovies()
       .then((res) => {
@@ -77,7 +80,6 @@ function Movies(props) {
                 handleDeleteMovie={handleDeleteMovie}
               />
           }
-
         </>
       </div>
     </section>
