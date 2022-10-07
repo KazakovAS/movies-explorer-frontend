@@ -16,6 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
+import { normalizeMovie } from "../../utils/helpers";
 
 function App() {
   const history = useHistory();
@@ -82,17 +83,7 @@ function App() {
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
-    history.push('/');
-  }
-
-  function getCurrentUser() {
-    mainApi.getProfile()
-      .then(res => {
-        setUserData(res);
-      })
-      .catch((err) => {
-        setServerResponse(err.message);
-      });
+    location.reload();
   }
 
   function setUserData(data) {
@@ -101,7 +92,35 @@ function App() {
     localStorage.setItem('email', data.email);
   }
 
-  function checkToken() {
+  function resetServerResponse() {
+    setTimeout(() => {
+      setServerResponse({ status: '', message: '' });
+    }, 2000);
+  }
+
+  function handleSaveMovie(movie) {
+    console.log(movie)
+    // const normalizedMovie = normalizeMovie(movie);
+    // console.log(normalizedMovie);
+
+    mainApi.saveMovie(movie)
+      .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
+      .catch(console.error);
+  }
+
+  function handleDeleteMovie(movie) {
+    const savedMovie = savedMovies.find(item => item.movieId === movie.id || item.movieId === movie.movieId);
+
+    mainApi.deleteMovie(savedMovie._id)
+      .then(() => {
+        const newMovies = savedMovies.filter(m => !(movie.id === m.movieId || movie.movieId === m.movieId));
+
+        setSavedMovies(newMovies);
+      })
+      .catch(console.error);
+  }
+
+  useEffect(() => {
     const token = localStorage.getItem("jwt");
 
     if (token) {
@@ -121,40 +140,18 @@ function App() {
     } else {
       setLoggedIn(false);
     }
-  }
-
-  function resetServerResponse() {
-    setTimeout(() => {
-      setServerResponse({ status: '', message: '' });
-    }, 2000);
-  }
-
-  function handleSaveMovie(movie) {
-    mainApi.saveMovie(movie)
-      .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
-      .catch(console.error);
-  }
-
-  function handleDeleteMovie(movie) {
-    const savedMovie = savedMovies.find(item => item.movieId === movie.id || item.movieId === movie.movieId);
-
-    console.log(savedMovie);
-
-    mainApi.deleteMovie(savedMovie._id)
-      .then(() => {
-        const newMovies = savedMovies.filter(m => !(movie.id === m.movieId || movie.movieId === m.movieId));
-
-        setSavedMovies(newMovies);
-      })
-      .catch(console.error);
-  }
+  }, [])
 
   useEffect(() => {
     if (loggedIn) {
-      checkToken();
-      getCurrentUser();
+      mainApi.getProfile()
+        .then(res => {
+          setUserData(res);
+        })
+        .catch((err) => {
+          setServerResponse(err.message);
+        });
     }
-
   }, [loggedIn]);
 
   useEffect(() => {
@@ -166,8 +163,6 @@ function App() {
         })
         .catch(console.error);
     }
-
-    console.log(savedMovies)
   }, [currentUser, loggedIn]);
 
   return (

@@ -18,7 +18,11 @@ function MoviesCard(props) {
   return (
     <article className="movies-card">
       <picture className="movies-card__preview">
-        <img className="movies-card__preview-image" src={`${MOVIES_IMAGES}${image.url}`} alt={nameRU} />
+        <img
+          className="movies-card__preview-image"
+          src={movie.image.url ? `${MOVIES_IMAGES}${image.url}` : movie.image}
+          alt={nameRU}
+        />
       </picture>
 
       <div className="movies-card__content">
@@ -36,27 +40,27 @@ function MoviesCard(props) {
           <time className="movies-card__duration" dateTime={convertingTime(duration, 'en')}>{convertingTime(duration, 'ru')}</time>
         </div>
 
-        {/*{location.pathname === '/movies' && (*/}
-        {/*  <button*/}
-        {/*    className={`movies-card__button movies-card__button_type_${*/}
-        {/*      saved ? 'liked' : 'default'*/}
-        {/*    }`}*/}
-        {/*    aria-label={`${*/}
-        {/*      saved ? 'Удалить фильм из сохранённых' : 'Сохранить фильм'*/}
-        {/*    }`}*/}
-        {/*    type="button"*/}
-        {/*    onClick={saved ? onDelete : onLike}*/}
-        {/*  />*/}
-        {/*)}*/}
+        {location.pathname === '/movies' && (
+          <button
+            className={`movies-card__button movies-card__button_type_${
+              saved ? 'liked' : 'default'
+            }`}
+            aria-label={`${
+              saved ? 'Удалить фильм из сохранённых' : 'Сохранить фильм'
+            }`}
+            type="button"
+            onClick={saved ? onDelete : onLike}
+          />
+        )}
 
-        {/*{location.pathname === '/saved-movies' && (*/}
+        {location.pathname === '/saved-movies' && (
           <button
             className="movies-card__button movies-card__button_type_delete"
             aria-label="Удалить фильм"
             type="button"
             onClick={onDelete}
           />
-        {/*)}*/}
+        )}
       </div>
     </article>
   );
