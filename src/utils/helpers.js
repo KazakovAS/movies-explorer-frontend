@@ -32,4 +32,12 @@ function filterShortMovies(movies) {
   return movies.filter(movie => movie.duration <= SHORT_MOVIES_DURATION);
 }
 
-export { convertingTime, filterMovies, filterShortMovies };
+function normalizeMovie(movie) {
+  const movieKeys = ['country', 'nameEN', 'director'];
+
+  return movieKeys.map((key) => {
+    if (movie[key] === '' || movie[key] === null) movie[key] = 'null';
+  })
+}
+
+export { convertingTime, filterMovies, normalizeMovie, filterShortMovies };

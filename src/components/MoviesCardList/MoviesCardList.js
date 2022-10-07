@@ -5,7 +5,6 @@ import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import { CARDS_PARAMS } from '../../utils/constants';
 import './MoviesCardList.css';
 
-
 function MoviesCardList(props) {
   const { movies, savedMovies, handleSaveMovie, handleDeleteMovie } = props;
 
@@ -32,11 +31,13 @@ function MoviesCardList(props) {
   }
 
   useEffect(() => {
-    screenWidth >= tablet.width
-      ? setAmountCards(tablet.cards)
-      : setAmountCards(mobile.cards);
+    // if (location.pathname === '/movies') {
+      screenWidth >= tablet.width
+        ? setAmountCards(tablet.cards)
+        : setAmountCards(mobile.cards);
 
-    return () => setIsMount(false);
+      return () => setIsMount(false);
+    // }
   }, [screenWidth, isMount, tablet, mobile]);
 
   useEffect(() => {
@@ -67,7 +68,7 @@ function MoviesCardList(props) {
             )}
           </ul>
 
-          { shownMovies.length !== movies.length &&
+          { location.pathname === '/movies' && shownMovies.length !== movies.length &&
             <button
               className="movies__add-more"
               type="button"
