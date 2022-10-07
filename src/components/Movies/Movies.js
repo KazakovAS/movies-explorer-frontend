@@ -50,7 +50,7 @@ function Movies(props) {
   function handleSearchForm(userRequest) {
     // setNotFound(false);
 
-    handleSetMovies(userRequest, userRequest);
+    handleSetMovies(shortMoviesStatus, userRequest);
 
     // setMoviesResults(result);
     // localStorage.setItem('moviesResults', JSON.stringify(result));
