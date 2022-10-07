@@ -18,7 +18,11 @@ function MoviesCard(props) {
   return (
     <article className="movies-card">
       <picture className="movies-card__preview">
-        <img className="movies-card__preview-image" src={`${MOVIES_IMAGES}${image.url}`} alt={nameRU} />
+        <img
+          className="movies-card__preview-image"
+          src={movie.image.url ? `${MOVIES_IMAGES}${image.url}` : movie.image}
+          alt={nameRU}
+        />
       </picture>
 
       <div className="movies-card__content">

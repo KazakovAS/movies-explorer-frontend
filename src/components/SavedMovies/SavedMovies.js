@@ -45,7 +45,6 @@ function SavedMovies(props) {
   }
 
   useEffect(() => {
-    // const movies = localStorage.getItem('moviesLikedResults');
     const shortMovies = localStorage.getItem('shortMoviesLikedStatus');
 
     setMoviesResults(savedMovies);
