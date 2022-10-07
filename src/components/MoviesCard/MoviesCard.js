@@ -37,12 +37,29 @@ function MoviesCard(props) {
         </div>
 
         {/*<button className="movies-card__button movies-card__button_type_default" type="button" />*/}
-        <button
-          className="movies-card__button movies-card__button_type_liked"
-          type="button"
-          onClick={onLike}
-        />
-        {/*<button className="movies-card__button movies-card__button_type_delete" type="button" />*/}
+
+
+        {location.pathname === '/movies' && (
+          <button
+            className={`movies-card__button movies-card__button_type_${
+              saved ? 'liked' : 'default'
+            }`}
+            aria-label={`${
+              saved ? 'Удалить фильм из сохранённых' : 'Сохранить фильм'
+            }`}
+            type="button"
+            onClick={saved ? onDelete : onLike}
+          />
+        )}
+
+        {location.pathname === '/saved-movies' && (
+          <button
+            className="movies-card__button movies-card__button_type_delete"
+            aria-label="Удалить фильм"
+            type="button"
+            onClick={onDelete}
+          />
+        )}
       </div>
     </article>
   );

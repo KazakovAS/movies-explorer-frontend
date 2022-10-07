@@ -26,6 +26,16 @@ function Movies(props) {
       : setNotFound(false)
   }
 
+
+  function fillShortFilms() {
+    const shortMoviesList = filterShortMovies(searchesMovies);
+
+    handleNotFound(shortMoviesList);
+
+    setFilteredShortMovies(shortMoviesList);
+    localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies));
+  }
+
   function fillMoviesList(userRequest) {
     const moviesList = filterMovies(movies, userRequest);
 
@@ -34,21 +44,31 @@ function Movies(props) {
     setSearchesMovies(moviesList);
     localStorage.setItem('searchesMovies', JSON.stringify(searchesMovies));
 
-
     if (shortMoviesStatus) {
-      const shortMoviesList = filterShortMovies(searchesMovies);
+      fillShortFilms();
 
-      handleNotFound(shortMoviesList);
-
-      setFilteredShortMovies(shortMoviesList);
-      localStorage.setItem('filteredShortMovies', JSON.stringify(filteredShortMovies));
+      setShortMoviesStatus(true);
+      localStorage.setItem('shortMoviesStatus', JSON.stringify(shortMoviesStatus));
+    } else {
+      setShortMoviesStatus(false);
+      localStorage.setItem('shortMoviesStatus', JSON.stringify(shortMoviesStatus));
     }
   }
 
+  function handleShortFilms() {
+    setShortMoviesStatus(!shortMoviesStatus);
+    localStorage.setItem('shortMoviesStatus', JSON.stringify(!shortMoviesStatus));
+
+    if (shortMoviesStatus) fillShortFilms()
+  }
+
   function handleSearchForm(userRequest) {
+    setIsProcessing(true);
     setNotFound(false);
 
     fillMoviesList(userRequest);
+
+    setIsProcessing(false);
   }
 
   useEffect(() => {
@@ -67,15 +87,30 @@ function Movies(props) {
     }
   }, [movies]);
 
+  // useEffect(() => {
+  //   // fillMoviesList();
+  // }, [searchesMovies, filteredShortMovies, notFound, handleSearchForm])
+
   useEffect(() => {
-    // fillMoviesList();
-  }, [searchesMovies, filteredShortMovies, notFound, handleSearchForm])
+    if (localStorage.getItem('shortMoviesStatus') === 'true') {
+      setShortMoviesStatus(true);
+
+      fillShortFilms();
+    } else {
+      setShortMoviesStatus(false);
+
+      // setSearchesMovies(moviesList);
+      localStorage.setItem('searchesMovies', JSON.stringify(searchesMovies));
+    }
+  }, []);
 
   return (
     <section className="movies">
       <div className="movies__wrapper">
         <SearchForm
           handleSearchForm={handleSearchForm}
+          handleShortFilms={handleShortFilms}
+          shortMoviesStatus={shortMoviesStatus}
           isProcessing={isProcessing}
           serverResponse={serverResponse}
         />

@@ -25,26 +25,6 @@ function App() {
   const [ isProcessing, setIsProcessing ] = useState(false);
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
-  useEffect(() => {
-    if (loggedIn) {
-      checkToken();
-      getCurrentUser();
-    }
-
-  }, [loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn && currentUser) {
-      mainApi.getSavedMovies()
-        .then(data => {
-          const UserMovies = data.filter(movie => movie.owner === currentUser._id);
-
-          setSavedMovies(UserMovies);
-        })
-        .catch(console.error);
-    }
-  }, [currentUser, loggedIn]);
-
   function handleRegister(name, email, password) {
     setIsProcessing(true);
 
@@ -166,6 +146,26 @@ function App() {
       })
       .catch(console.error);
   }
+
+  useEffect(() => {
+    if (loggedIn) {
+      checkToken();
+      getCurrentUser();
+    }
+
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn && currentUser) {
+      mainApi.getSavedMovies()
+        .then(data => {
+          const UserMovies = data.filter(movie => movie.owner === currentUser._id);
+
+          setSavedMovies(UserMovies);
+        })
+        .catch(console.error);
+    }
+  }, [currentUser, loggedIn]);
 
   return (
     <AuthContext.Provider value={{ loggedIn: loggedIn }}>
