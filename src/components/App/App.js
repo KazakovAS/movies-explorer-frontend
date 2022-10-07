@@ -82,7 +82,7 @@ function App() {
     localStorage.clear();
     setLoggedIn(false);
     setCurrentUser({});
-    history.push('/');
+    location.reload();
   }
 
   function setUserData(data) {
