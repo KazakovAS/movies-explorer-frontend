@@ -85,23 +85,37 @@ function App() {
     history.push('/');
   }
 
-  function getCurrentUser() {
-    mainApi.getProfile()
-      .then(res => {
-        setUserData(res);
-      })
-      .catch((err) => {
-        setServerResponse(err.message);
-      });
-  }
-
   function setUserData(data) {
     setCurrentUser(data);
     localStorage.setItem('name', data.name);
     localStorage.setItem('email', data.email);
   }
 
-  function checkToken() {
+  function resetServerResponse() {
+    setTimeout(() => {
+      setServerResponse({ status: '', message: '' });
+    }, 2000);
+  }
+
+  function handleSaveMovie(movie) {
+    mainApi.saveMovie(movie)
+      .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
+      .catch(console.error);
+  }
+
+  function handleDeleteMovie(movie) {
+    const savedMovie = savedMovies.find(item => item.movieId === movie.id || item.movieId === movie.movieId);
+
+    mainApi.deleteMovie(savedMovie._id)
+      .then(() => {
+        const newMovies = savedMovies.filter(m => !(movie.id === m.movieId || movie.movieId === m.movieId));
+
+        setSavedMovies(newMovies);
+      })
+      .catch(console.error);
+  }
+
+  useEffect(() => {
     const token = localStorage.getItem("jwt");
 
     if (token) {
@@ -121,40 +135,18 @@ function App() {
     } else {
       setLoggedIn(false);
     }
-  }
-
-  function resetServerResponse() {
-    setTimeout(() => {
-      setServerResponse({ status: '', message: '' });
-    }, 2000);
-  }
-
-  function handleSaveMovie(movie) {
-    mainApi.saveMovie(movie)
-      .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
-      .catch(console.error);
-  }
-
-  function handleDeleteMovie(movie) {
-    const savedMovie = savedMovies.find(item => item.movieId === movie.id || item.movieId === movie.movieId);
-
-    console.log(savedMovie);
-
-    mainApi.deleteMovie(savedMovie._id)
-      .then(() => {
-        const newMovies = savedMovies.filter(m => !(movie.id === m.movieId || movie.movieId === m.movieId));
-
-        setSavedMovies(newMovies);
-      })
-      .catch(console.error);
-  }
+  }, [])
 
   useEffect(() => {
     if (loggedIn) {
-      checkToken();
-      getCurrentUser();
+      mainApi.getProfile()
+        .then(res => {
+          setUserData(res);
+        })
+        .catch((err) => {
+          setServerResponse(err.message);
+        });
     }
-
   }, [loggedIn]);
 
   useEffect(() => {
