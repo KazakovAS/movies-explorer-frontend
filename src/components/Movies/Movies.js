@@ -30,14 +30,22 @@ function Movies(props) {
     setShortMoviesStatus(!shortMoviesStatus);
     localStorage.setItem('shortMoviesStatus', JSON.stringify(!shortMoviesStatus));
 
-    handleSetMovies(!shortMoviesStatus, localStorage.getItem('movieSearch'))
+    handleSetMovies(!shortMoviesStatus, localStorage.getItem('movieSearch'));
   }
 
   function handleSetMovies(shortMoviesStatus, userRequest) {
     const foundMovies = filterMovies(movies, userRequest);
+    const foundShortMovie = filterShortMovies(foundMovies);
 
-    if (!handleNotFound(foundMovies)) {
-      setDf(foundMovies);
+    setNotFound(false);
+    // if (!handleNotFound(foundMovies)) {
+    //   setDf(foundMovies);
+    // }
+
+    if (foundMovies.length === 0 || (shortMoviesStatus && foundShortMovie.length === 0)) {
+      setNotFound(true);
+
+      return;
     }
 
     setMoviesResults(
