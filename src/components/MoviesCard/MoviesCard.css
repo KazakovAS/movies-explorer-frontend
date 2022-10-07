@@ -63,12 +63,16 @@
   transition: opacity 1s;
 }
 
-.movies-card__button:hover {
+.movies-card__button:not(.movies-card__button_type_default):hover {
   opacity: .6;
 }
 
 .movies-card__button_type_default {
   background-image: url(../../images/card-status.svg#default);
+}
+
+.movies-card__button_type_default:hover {
+  background-image: url(../../images/card-status.svg#liked);
 }
 
 .movies-card__button_type_liked {

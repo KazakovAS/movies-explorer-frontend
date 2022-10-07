@@ -3,7 +3,13 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import './MoviesCardList.css';
 
 function MoviesCardList(props) {
-  const { movies, saved, handleSaveMovie, handleDeleteMovie } = props;
+  const { movies, savedMovies, handleSaveMovie, handleDeleteMovie } = props;
+
+  function getSavedMovieCard(movies, movie) {
+    return movies.find((item) => {
+      return item.movieId === (movie.id || movie.movieId);
+    });
+  }
 
   return (
     <>
@@ -13,11 +19,11 @@ function MoviesCardList(props) {
             { movies.map(movie =>
               <li
                 className="movies-card-list__item"
-                // key={ saved ? movie._id : movie.id }
+                key={movie._id || movie.id}
               >
                 <MoviesCard
                   movie={movie}
-                  saved={saved}
+                  saved={getSavedMovieCard(savedMovies, movie)}
                   handleSaveMovie={handleSaveMovie}
                   handleDeleteMovie={handleDeleteMovie}
                 />

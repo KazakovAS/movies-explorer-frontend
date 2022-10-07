@@ -160,7 +160,6 @@ function App() {
       mainApi.getSavedMovies()
         .then(data => {
           const UserMovies = data.filter(movie => movie.owner === currentUser._id);
-          console.log(UserMovies);
           setSavedMovies(UserMovies);
         })
         .catch(console.error);

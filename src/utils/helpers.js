@@ -1,4 +1,4 @@
-import {SHORTMOVIES_DURATION} from './constants.js';
+import { SHORTMOVIES_DURATION } from './constants.js';
 
 function convertingTime(time, format = 'en') {
   const hours = Math.trunc(time/60);
