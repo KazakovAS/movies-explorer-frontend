@@ -18,26 +18,42 @@ function Movies(props) {
   const [ shortMoviesStatus, setShortMoviesStatus ] = useState(false);
 
   const [ moviesResults, setMoviesResults ] = useState([]);
+  const [ df, setDf ] = useState([]);
 
   function handleNotFound(movies) {
     movies.length === 0
       ? setNotFound(true)
-      : setNotFound(false)
+      : setNotFound(false);
   }
 
   function handleShortFilms() {
     setShortMoviesStatus(!shortMoviesStatus);
     localStorage.setItem('shortMoviesStatus', JSON.stringify(!shortMoviesStatus));
+
+    handleSetMovies(!shortMoviesStatus, localStorage.getItem('movieSearch'))
+  }
+
+  function handleSetMovies(shortMoviesStatus, userRequest) {
+    const foundMovies = filterMovies(movies, userRequest);
+
+    if (!handleNotFound(foundMovies)) {
+      setDf(foundMovies);
+    }
+
+    setMoviesResults(
+      shortMoviesStatus
+        ? filterShortMovies(foundMovies)
+        : foundMovies
+    );
   }
 
   function handleSearchForm(userRequest) {
     // setNotFound(false);
 
-    const filteredMovies = filterMovies(movies, userRequest);
-    const result = shortMoviesStatus ? filterShortMovies(filteredMovies) : filteredMovies;
+    handleSetMovies(userRequest, userRequest);
 
-    setMoviesResults(result);
-    localStorage.setItem('moviesResults', JSON.stringify(result));
+    // setMoviesResults(result);
+    // localStorage.setItem('moviesResults', JSON.stringify(result));
   }
 
   useEffect(() => {
@@ -62,7 +78,7 @@ function Movies(props) {
 
     if (movies) setMoviesResults(JSON.parse(movies));
     if (shortMovies) setShortMoviesStatus(JSON.parse(shortMovies));
-  });
+  }, []);
 
   return (
     <section className="movies">
