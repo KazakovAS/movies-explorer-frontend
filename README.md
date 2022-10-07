@@ -8,6 +8,7 @@
 ## Ссылки:
 
 -   [Демо](https://lerush.nomoredomains.sbs).
+  - [PullReq](https://github.com/KazakovAS/movies-explorer-frontend/pull/6)
 -   [Макет](https://www.figma.com/file/qDwSTl3buKJ24gYRk4oOzw/Diploma-(Copy)?node-id=891%3A3857).
 -   [Movies Explorer Backend](https://github.com/KazakovAS/movies-explorer-api).
 
