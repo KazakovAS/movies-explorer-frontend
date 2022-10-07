@@ -1,4 +1,4 @@
-import { SHORTMOVIES_DURATION } from './constants.js';
+import { SHORT_MOVIES_DURATION } from './constants.js';
 
 function convertingTime(time, format = 'en') {
   const hours = Math.trunc(time/60);
@@ -29,7 +29,7 @@ function filterMovies(movies, userRequest) {
 }
 
 function filterShortMovies(movies) {
-  return movies.filter(movie => movie.duration <= SHORTMOVIES_DURATION);
+  return movies.filter(movie => movie.duration <= SHORT_MOVIES_DURATION);
 }
 
 export { convertingTime, filterMovies, filterShortMovies };

@@ -1,22 +1,58 @@
-import MoviesCard from '../MoviesCard/MoviesCard';
+import { useState, useEffect } from 'react';
 
+import MoviesCard from '../MoviesCard/MoviesCard';
+import useScreenWidth from '../../utils/hooks/useScreenWidth';
+import { CARDS_PARAMS } from '../../utils/constants';
 import './MoviesCardList.css';
+
 
 function MoviesCardList(props) {
   const { movies, savedMovies, handleSaveMovie, handleDeleteMovie } = props;
 
+  const screenWidth = useScreenWidth();
+  const { tablet, mobile } = CARDS_PARAMS;
+  const [ amountCards, setAmountCards ] = useState({ default: mobile.total, add: mobile.add });
+  const [ isMount, setIsMount ] = useState(true);
+  const [ shownMovies, setShownMovies ] = useState([]);
+
   function getSavedMovieCard(movies, movie) {
-    return movies.find((item) => {
-      return item.movieId === (movie.id || movie.movieId);
-    });
+    return movies.find(item => item.movieId === (movie.id || movie.movieId));
   }
+
+  function handleAddMovies() {
+    const start = shownMovies.length;
+    const end = start + amountCards.add;
+    const additional = movies.length - start;
+
+    if (additional > 0) {
+      const newCards = movies.slice(start, end);
+
+      setShownMovies([...shownMovies, ...newCards]);
+    }
+  }
+
+  useEffect(() => {
+    screenWidth >= tablet.width
+      ? setAmountCards(tablet.cards)
+      : setAmountCards(mobile.cards);
+
+    return () => setIsMount(false);
+  }, [screenWidth, isMount, tablet, mobile]);
+
+  useEffect(() => {
+    if (movies.length) {
+      const defaultCards = movies.filter((item, i) => i < amountCards.total);
+
+      setShownMovies(defaultCards);
+    }
+  }, [movies, amountCards.total]);
 
   return (
     <>
-      { movies.length > 0 &&
+      { shownMovies.length > 0 &&
         <>
           <ul className="movies-card-list">
-            { movies.map(movie =>
+            { shownMovies.map(movie =>
               <li
                 className="movies-card-list__item"
                 key={movie._id || movie.id}
@@ -31,7 +67,15 @@ function MoviesCardList(props) {
             )}
           </ul>
 
-          <button className="movies__add-more" type="button">Ещё</button>
+          { shownMovies.length !== movies.length &&
+            <button
+              className="movies__add-more"
+              type="button"
+              onClick={handleAddMovies}
+            >
+              Ещё
+            </button>
+          }
         </>
       }
     </>
