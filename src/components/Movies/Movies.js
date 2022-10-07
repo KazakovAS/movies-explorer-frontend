@@ -59,9 +59,8 @@ function Movies(props) {
   useEffect(() => {
     const movies = localStorage.getItem('moviesResults');
     const shortMovies = localStorage.getItem('shortMoviesStatus');
-    console.log(JSON.parse(movies))
-    if (movies) setMoviesResults(JSON.parse(movies));
 
+    if (movies) setMoviesResults(JSON.parse(movies));
     if (shortMovies) setShortMoviesStatus(JSON.parse(shortMovies));
   });
 
