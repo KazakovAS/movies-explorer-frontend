@@ -5,7 +5,7 @@ import './MoviesCard.css';
 
 function MoviesCard(props) {
   const { movie, saved, handleSaveMovie, handleDeleteMovie } = props;
-  const { nameRU, image, duration, liked, trailerLink, owner } = movie;
+  const { nameRU, image, duration, trailerLink, owner } = movie;
 
   function onLike() {
     handleSaveMovie(movie);
@@ -30,19 +30,33 @@ function MoviesCard(props) {
               target="_blank"
               rel="nofollow noreferrer"
             >
-              {nameRU}
+              { nameRU }
             </a>
           </h2>
           <time className="movies-card__duration" dateTime={convertingTime(duration, 'en')}>{convertingTime(duration, 'ru')}</time>
         </div>
 
-        {/*<button className="movies-card__button movies-card__button_type_default" type="button" />*/}
-        <button
-          className="movies-card__button movies-card__button_type_liked"
-          type="button"
-          onClick={onLike}
-        />
-        {/*<button className="movies-card__button movies-card__button_type_delete" type="button" />*/}
+        {/*{location.pathname === '/movies' && (*/}
+        {/*  <button*/}
+        {/*    className={`movies-card__button movies-card__button_type_${*/}
+        {/*      saved ? 'liked' : 'default'*/}
+        {/*    }`}*/}
+        {/*    aria-label={`${*/}
+        {/*      saved ? 'Удалить фильм из сохранённых' : 'Сохранить фильм'*/}
+        {/*    }`}*/}
+        {/*    type="button"*/}
+        {/*    onClick={saved ? onDelete : onLike}*/}
+        {/*  />*/}
+        {/*)}*/}
+
+        {/*{location.pathname === '/saved-movies' && (*/}
+          <button
+            className="movies-card__button movies-card__button_type_delete"
+            aria-label="Удалить фильм"
+            type="button"
+            onClick={onDelete}
+          />
+        {/*)}*/}
       </div>
     </article>
   );

@@ -25,26 +25,6 @@ function App() {
   const [ isProcessing, setIsProcessing ] = useState(false);
   const [ serverResponse, setServerResponse ] = useState({ status: '', message: ''});
 
-  useEffect(() => {
-    if (loggedIn) {
-      checkToken();
-      getCurrentUser();
-    }
-
-  }, [loggedIn]);
-
-  useEffect(() => {
-    if (loggedIn && currentUser) {
-      mainApi.getSavedMovies()
-        .then(data => {
-          const UserMovies = data.filter(movie => movie.owner === currentUser._id);
-
-          setSavedMovies(UserMovies);
-        })
-        .catch(console.error);
-    }
-  }, [currentUser, loggedIn]);
-
   function handleRegister(name, email, password) {
     setIsProcessing(true);
 
@@ -158,6 +138,8 @@ function App() {
   function handleDeleteMovie(movie) {
     const savedMovie = savedMovies.find(item => item.movieId === movie.id || item.movieId === movie.movieId);
 
+    console.log(savedMovie);
+
     mainApi.deleteMovie(savedMovie._id)
       .then(() => {
         const newMovies = savedMovies.filter(m => !(movie.id === m.movieId || movie.movieId === m.movieId));
@@ -166,6 +148,27 @@ function App() {
       })
       .catch(console.error);
   }
+
+  useEffect(() => {
+    if (loggedIn) {
+      checkToken();
+      getCurrentUser();
+    }
+
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn && currentUser) {
+      mainApi.getSavedMovies()
+        .then(data => {
+          const UserMovies = data.filter(movie => movie.owner === currentUser._id);
+          setSavedMovies(UserMovies);
+        })
+        .catch(console.error);
+    }
+
+    console.log(savedMovies)
+  }, [currentUser, loggedIn]);
 
   return (
     <AuthContext.Provider value={{ loggedIn: loggedIn }}>

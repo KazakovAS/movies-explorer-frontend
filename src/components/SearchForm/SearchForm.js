@@ -8,7 +8,7 @@ import validations from '../../utils/validations';
 import './SearchForm.css';
 
 function SearchForm(props) {
-  const { handleSearchForm, isProcessing, serverResponse } = props;
+  const { handleSearchForm, shortMoviesStatus, handleShortFilms, isProcessing, serverResponse } = props;
 
   const {
     register,
@@ -17,7 +17,7 @@ function SearchForm(props) {
       isValid,
     },
     watch,
-    getValues,
+    setValue,
     handleSubmit,
     // reset,
   } = useForm({
@@ -31,8 +31,17 @@ function SearchForm(props) {
   function onSubmit() {
     handleSearchForm(movieName);
 
+    localStorage.setItem('movieSearch', movieName);
     // reset();
   }
+
+  useEffect(() => {
+    const saveValue = localStorage.getItem('movieSearch');
+
+    if (saveValue) {
+      setValue('movie', saveValue);
+    }
+  }, []);
 
   return (
     <Form
@@ -56,7 +65,10 @@ function SearchForm(props) {
         />
       </div>
 
-      <FilterCheckbox />
+      <FilterCheckbox
+        handleShortFilms={handleShortFilms}
+        shortMoviesStatus={shortMoviesStatus}
+      />
     </Form>
   );
 }
