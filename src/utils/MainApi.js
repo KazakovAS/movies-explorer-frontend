@@ -1,5 +1,5 @@
 import Api from './Api.js';
-import { MAIN_API } from './constants';
+import { MOVIES_IMAGES, MAIN_API } from './constants';
 
 class MainApi extends Api {
   constructor(api) {
@@ -38,19 +38,19 @@ class MainApi extends Api {
       .then(res => super._handleError(res))
   }
 
-  saveMovie(
+  saveMovie({
     country,
     director,
     duration,
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
-    movieId
-  ) {
+    id
+  }) {
     return fetch(`${this._api}/movies`, {
       method: "POST",
       headers: {
@@ -63,12 +63,12 @@ class MainApi extends Api {
         duration,
         year,
         description,
-        image,
-        trailer,
+        image: `${MOVIES_IMAGES}${image.url}`,
+        trailerLink,
         nameRU,
         nameEN,
-        thumbnail,
-        movieId
+        thumbnail: `${MOVIES_IMAGES}${image.formats.thumbnail.url}`,
+        movieId: Number(id),
       })
     })
       .then(res => super._handleError(res))

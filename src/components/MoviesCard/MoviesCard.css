@@ -48,6 +48,7 @@
 }
 
 .movies-card__button {
+  flex-shrink: 0;
   position: relative;
   z-index: 1;
   width: 14px;
