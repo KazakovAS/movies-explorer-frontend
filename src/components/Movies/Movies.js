@@ -26,6 +26,7 @@ function Movies(props) {
   }
 
   function handleSetMovies(shortMoviesStatus, userRequest) {
+    let result;
     const foundMovies = filterMovies(movies, userRequest);
     const foundShortMovie = filterShortMovies(foundMovies);
 
@@ -37,11 +38,9 @@ function Movies(props) {
       return;
     }
 
-    setMoviesResults(
-      shortMoviesStatus
-        ? filterShortMovies(foundMovies)
-        : foundMovies
-    );
+    result = shortMoviesStatus ? filterShortMovies(foundMovies) : foundMovies;
+    setMoviesResults(result);
+    localStorage.setItem('moviesResults', JSON.stringify(result));
   }
 
   function handleSearchForm(userRequest) {

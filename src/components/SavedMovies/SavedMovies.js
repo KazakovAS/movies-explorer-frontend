@@ -1,12 +1,21 @@
+import { useState, useEffect } from 'react';
+
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import NoResults from "../NoResults/NoResults";
 
+import { filterMovies, filterShortMovies } from '../../utils/helpers';
 import './SavedMovies.css';
 
 function SavedMovies(props) {
   const { savedMovies, handleDeleteMovie, isProcessing, serverResponse } = props;
+
+  const [ notFound, setNotFound ] = useState(false);
+  const [ shortMoviesStatus, setShortMoviesStatus ] = useState(false);
+  const [ moviesResults, setMoviesResults ] = useState([]);
+
+
 
   return (
     <section className="saved-movies">
@@ -26,7 +35,6 @@ function SavedMovies(props) {
             : <MoviesCardList
               movies={ shortMoviesStatus ? filteredShortMovies : searchesMovies }
               savedMovies={savedMovies}
-              handleSaveMovie={handleSaveMovie}
               handleDeleteMovie={handleDeleteMovie}
             />
           }
