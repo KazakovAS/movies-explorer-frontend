@@ -12,7 +12,7 @@ function FilterCheckbox(props) {
           className="filter-checkbox__field"
           type="checkbox"
           onChange={handleShortFilms}
-          checked={!!shortMoviesStatus}
+          checked={shortMoviesStatus}
         />
         <span className="filter-checkbox__status"></span>
       </label>

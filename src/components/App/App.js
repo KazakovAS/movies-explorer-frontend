@@ -138,6 +138,8 @@ function App() {
   function handleDeleteMovie(movie) {
     const savedMovie = savedMovies.find(item => item.movieId === movie.id || item.movieId === movie.movieId);
 
+    console.log(savedMovie);
+
     mainApi.deleteMovie(savedMovie._id)
       .then(() => {
         const newMovies = savedMovies.filter(m => !(movie.id === m.movieId || movie.movieId === m.movieId));
@@ -164,6 +166,8 @@ function App() {
         })
         .catch(console.error);
     }
+
+    console.log(savedMovies)
   }, [currentUser, loggedIn]);
 
   return (

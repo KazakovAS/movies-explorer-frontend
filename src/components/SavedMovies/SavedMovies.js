@@ -1,9 +1,9 @@
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-
-import './SavedMovies.css';
 import Preloader from "../Preloader/Preloader";
 import NoResults from "../NoResults/NoResults";
+
+import './SavedMovies.css';
 
 function SavedMovies(props) {
   const { savedMovies, handleDeleteMovie, isProcessing, serverResponse } = props;
