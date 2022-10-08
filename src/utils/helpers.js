@@ -35,7 +35,7 @@ function filterShortMovies(movies) {
 function normalizeMovie(movie) {
   const movieKeys = ['country', 'nameEN', 'director'];
 
-  return movieKeys.map((key) => {
+  return movieKeys.map(key => {
     if (movie[key] === '' || movie[key] === null) movie[key] = 'null';
   })
 }

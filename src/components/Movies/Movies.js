@@ -19,60 +19,59 @@ function Movies(props) {
   const [ moviesLastResults, setMoviesLastResults ] = useState([]);
 
   function handleShortFilms() {
-    const foundMovies = JSON.parse(localStorage.getItem('foundMovies'));
-    const shortMovies = JSON.parse(localStorage.getItem('shortMovies'));
-
-    localStorage.setItem('shortMoviesStatus', JSON.stringify(!shortMoviesStatus));
     setShortMoviesStatus(!shortMoviesStatus);
+    localStorage.setItem('shortMoviesStatus', JSON.stringify(!shortMoviesStatus));
 
-    if (foundMovies && shortMovies) {
-      if (!shortMoviesStatus) {
-        shortMovies.length === 0
-          ? setNotFound(true)
-          : setMoviesLastResults(shortMovies);
-      } else {
-        foundMovies.length === 0
-          ? setNotFound(true)
-          : setMoviesLastResults(foundMovies);
-      }
-    }
+    selectMoviesForFill();
   }
 
   function handleFindShortMovies(movies) {
     const shortMovies = filterShortMovies(movies);
 
     localStorage.setItem('shortMovies', JSON.stringify(shortMovies));
-    localStorage.setItem('moviesLastResults', JSON.stringify(shortMovies));
   }
 
   function handleFindMovies(movies, userRequest) {
     const foundMovies = filterMovies(movies, userRequest);
 
     localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-    localStorage.setItem('moviesLastResults', JSON.stringify(foundMovies));
   }
 
-  function handleSetMovies(movies, shortMoviesStatus, userRequest) {
+  function handleSetMovies(movies, userRequest) {
     setNotFound(false);
 
     handleFindMovies(movies, userRequest);
+    handleFindShortMovies(JSON.parse(localStorage.getItem('foundMovies')));
+
+    selectMoviesForFill();
+  }
+
+  function selectMoviesForFill() {
     const foundMovies = JSON.parse(localStorage.getItem('foundMovies'));
-
-    handleFindShortMovies(foundMovies);
     const shortMovies = JSON.parse(localStorage.getItem('shortMovies'));
+    const shortMoviesStatus = JSON.parse(localStorage.getItem('shortMoviesStatus'));
 
-    if (!shortMoviesStatus) {
-      foundMovies.length === 0
-        ? setNotFound(true)
-        : setMoviesLastResults(foundMovies);
+    if (foundMovies && shortMovies) {
+      if (shortMoviesStatus) {
+        fillMovies(shortMovies);
+      } else {
+        fillMovies(foundMovies);
+      }
+    }
+  }
+
+  function fillMovies(movies) {
+    if (movies.length === 0) {
+      setNotFound(true);
     } else {
-      shortMovies.length === 0
-        ? setNotFound(true)
-        : setMoviesLastResults(shortMovies);
+      setMoviesLastResults(movies);
+      localStorage.setItem('moviesLastResults', JSON.stringify(movies));
     }
   }
 
   function handleSearchForm(userRequest) {
+    localStorage.setItem('shortMoviesStatus', JSON.stringify(shortMoviesStatus));
+
     if (!localStorage.getItem('movies')) {
       setIsProcessing(true);
 
@@ -81,7 +80,7 @@ function Movies(props) {
           setMovies(res);
           localStorage.setItem('movies', JSON.stringify(res));
 
-          handleSetMovies(res, shortMoviesStatus, userRequest);
+          handleSetMovies(res, userRequest);
         })
         .catch((err) => {
           setServerResponse({ status: 'error', message: err.message});
@@ -91,7 +90,7 @@ function Movies(props) {
         });
     }
 
-    handleSetMovies(movies, shortMoviesStatus, userRequest);
+    handleSetMovies(movies, userRequest);
   }
 
   useEffect(() => {

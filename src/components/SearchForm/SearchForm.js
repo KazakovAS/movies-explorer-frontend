@@ -21,7 +21,7 @@ function SearchForm(props) {
     handleSubmit,
     // reset,
   } = useForm({
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
   const [ movieName ] = watch(['movie']);
   const {
@@ -51,8 +51,7 @@ function SearchForm(props) {
       <div className="search-form__item">
         <input
           {...register('movie', {
-            required: movieRules.required,
-            minLength: movieRules.minLength,
+            required: movieRules.required
           })}
           className="search-form__field"
           placeholder="Фильм"
@@ -62,10 +61,10 @@ function SearchForm(props) {
         <button
           className="search-form__submit"
           aria-label="Найти"
-          disabled={ !isValid || isProcessing }
+          disabled={isProcessing}
         />
 
-        { !isValid && <span className="form__error search-form__error">123</span> }
+        { errors?.movie && <span className="search-form__error">{ errors?.movie?.message }</span> }
       </div>
 
       <FilterCheckbox

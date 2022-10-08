@@ -99,6 +99,7 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
+    // console.log(`movie`, movie)
     // const normalizedMovie = normalizeMovie(movie);
     // console.log(normalizedMovie);
 
