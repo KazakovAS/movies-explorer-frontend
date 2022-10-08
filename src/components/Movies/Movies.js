@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
@@ -16,43 +16,74 @@ function Movies(props) {
   const [ movies, setMovies ] = useState(JSON.parse(localStorage.getItem('movies')));
   const [ notFound, setNotFound ] = useState(false);
   const [ shortMoviesStatus, setShortMoviesStatus ] = useState(false);
-  const [ moviesResults, setMoviesResults ] = useState([]);
+  const [ moviesLastResults, setMoviesLastResults ] = useState([]);
 
   function handleShortFilms() {
     setShortMoviesStatus(!shortMoviesStatus);
     localStorage.setItem('shortMoviesStatus', JSON.stringify(!shortMoviesStatus));
 
-    handleSetMovies(!shortMoviesStatus, localStorage.getItem('movieSearch'));
+    selectMoviesForFill();
   }
 
-  function handleSetMovies(shortMoviesStatus, userRequest) {
-    let result;
-    const foundMovies = filterMovies(movies, userRequest);
-    const foundShortMovie = filterShortMovies(foundMovies);
+  function handleFindShortMovies(movies) {
+    const shortMovies = filterShortMovies(movies);
 
+    localStorage.setItem('shortMovies', JSON.stringify(shortMovies));
+  }
+
+  function handleFindMovies(movies, userRequest) {
+    const foundMovies = filterMovies(movies, userRequest);
+
+    localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+  }
+
+  function handleSetMovies(movies, userRequest) {
     setNotFound(false);
 
-    if (foundMovies.length === 0 || (shortMoviesStatus && foundShortMovie.length === 0)) {
-      setNotFound(true);
+    handleFindMovies(movies, userRequest);
+    handleFindShortMovies(JSON.parse(localStorage.getItem('foundMovies')));
 
-      return;
+    selectMoviesForFill();
+  }
+
+  function selectMoviesForFill() {
+    const foundMovies = JSON.parse(localStorage.getItem('foundMovies'));
+    const shortMovies = JSON.parse(localStorage.getItem('shortMovies'));
+    const shortMoviesStatus = JSON.parse(localStorage.getItem('shortMoviesStatus'));
+
+    if (foundMovies && shortMovies) {
+      if (shortMoviesStatus) {
+        fillMovies(shortMovies);
+      } else {
+        fillMovies(foundMovies);
+      }
     }
+  }
 
-    result = shortMoviesStatus ? filterShortMovies(foundMovies) : foundMovies;
-    setMoviesResults(result);
-    localStorage.setItem('moviesResults', JSON.stringify(result));
+  function fillMovies(movies) {
+    if (movies.length === 0) {
+      setNotFound(true);
+      setMoviesLastResults([]);
+      localStorage.setItem('moviesLastResults', JSON.stringify([]));
+    } else {
+      setNotFound(false);
+      setMoviesLastResults(movies);
+      localStorage.setItem('moviesLastResults', JSON.stringify(movies));
+    }
   }
 
   function handleSearchForm(userRequest) {
-    handleSetMovies(shortMoviesStatus, userRequest);
-  }
+    localStorage.setItem('shortMoviesStatus', JSON.stringify(shortMoviesStatus));
 
-  useEffect(() => {
     if (!localStorage.getItem('movies')) {
+      setIsProcessing(true);
+
       moviesApi.getMovies()
         .then((res) => {
           setMovies(res);
           localStorage.setItem('movies', JSON.stringify(res));
+
+          handleSetMovies(res, userRequest);
         })
         .catch((err) => {
           setServerResponse({ status: 'error', message: err.message});
@@ -61,13 +92,15 @@ function Movies(props) {
           setIsProcessing(false);
         });
     }
-  }, [movies]);
+
+    handleSetMovies(movies, userRequest);
+  }
 
   useEffect(() => {
-    const movies = localStorage.getItem('moviesResults');
+    const movies = localStorage.getItem('moviesLastResults');
     const shortMovies = localStorage.getItem('shortMoviesStatus');
 
-    if (movies) setMoviesResults(JSON.parse(movies));
+    if (movies) setMoviesLastResults(JSON.parse(movies));
     if (shortMovies) setShortMoviesStatus(JSON.parse(shortMovies));
   }, []);
 
@@ -84,10 +117,10 @@ function Movies(props) {
         <>
           { isProcessing && <Preloader /> }
 
-          { notFound
+          { notFound || moviesLastResults.length === 0 && JSON.parse(localStorage.getItem('movies'))
             ? <NoResults />
             : <MoviesCardList
-                movies={moviesResults}
+                movies={moviesLastResults}
                 savedMovies={savedMovies}
                 handleSaveMovie={handleSaveMovie}
                 handleDeleteMovie={handleDeleteMovie}

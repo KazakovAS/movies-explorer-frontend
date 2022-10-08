@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import {useEffect} from 'react';
+import {useForm} from 'react-hook-form';
 
 import Form from "../Form/Form";
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
@@ -8,20 +8,18 @@ import validations from '../../utils/validations';
 import './SearchForm.css';
 
 function SearchForm(props) {
-  const { handleSearchForm, shortMoviesStatus, handleShortFilms, isProcessing, serverResponse } = props;
+  const { handleSearchForm, shortMoviesStatus, handleShortFilms, isProcessing } = props;
 
   const {
     register,
     formState: {
       errors,
-      isValid,
     },
     watch,
     setValue,
     handleSubmit,
-    // reset,
   } = useForm({
-    mode: 'onChange',
+    mode: 'onSubmit',
   });
   const [ movieName ] = watch(['movie']);
   const {
@@ -31,15 +29,17 @@ function SearchForm(props) {
   function onSubmit() {
     handleSearchForm(movieName);
 
-    localStorage.setItem('movieSearch', movieName);
-    // reset();
+    if (location.pathname === '/movies') {
+      localStorage.setItem('moviesSearch', movieName);
+    }
+
   }
 
   useEffect(() => {
-    const saveValue = localStorage.getItem('movieSearch');
+    const saveValue = localStorage.getItem('moviesSearch');
 
-    if (saveValue) {
-      setValue('movie', saveValue);
+    if (location.pathname === '/movies' && saveValue) {
+      setValue('movie', localStorage.getItem('moviesSearch'))
     }
   }, []);
 
@@ -51,21 +51,19 @@ function SearchForm(props) {
       <div className="search-form__item">
         <input
           {...register('movie', {
-            required: movieRules.required,
-            minLength: movieRules.minLength,
+            required: movieRules.required
           })}
           className="search-form__field"
           placeholder="Фильм"
-          required
         />
 
         <button
           className="search-form__submit"
           aria-label="Найти"
-          disabled={ !isValid || isProcessing }
+          disabled={isProcessing}
         />
 
-        { !isValid && <span className="form__error search-form__error">123</span> }
+        { errors?.movie && <span className="search-form__error">{ errors?.movie?.message }</span> }
       </div>
 
       <FilterCheckbox
