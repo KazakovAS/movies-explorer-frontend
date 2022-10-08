@@ -22,6 +22,10 @@ const validations = {
   },
   movie: {
     required: 'Нужно ввести ключевое слово',
+    minLength: {
+      value: 1,
+      message: `Нужно ввести ключевое слово`,
+    },
   },
 };
 
