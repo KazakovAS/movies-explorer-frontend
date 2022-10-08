@@ -63,6 +63,8 @@ function Movies(props) {
   function fillMovies(movies) {
     if (movies.length === 0) {
       setNotFound(true);
+      setMoviesLastResults([]);
+      localStorage.setItem('moviesLastResults', JSON.stringify([]));
     } else {
       setMoviesLastResults(movies);
       localStorage.setItem('moviesLastResults', JSON.stringify(movies));
@@ -114,7 +116,7 @@ function Movies(props) {
         <>
           { isProcessing && <Preloader /> }
 
-          { notFound
+          { notFound || moviesLastResults.length === 0
             ? <NoResults />
             : <MoviesCardList
                 movies={moviesLastResults}
