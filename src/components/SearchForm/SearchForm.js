@@ -29,11 +29,14 @@ function SearchForm(props) {
   function onSubmit() {
     handleSearchForm(movieName);
 
-    localStorage.setItem('movieSearch', movieName);
+    if (location.pathname === '/movies') {
+      localStorage.setItem('moviesSearch', movieName);
+    }
+
   }
 
   useEffect(() => {
-    const saveValue = localStorage.getItem('movieSearch');
+    const saveValue = localStorage.getItem('moviesSearch');
 
     if (location.pathname === '/movies' && saveValue) {
       setValue('movie', localStorage.getItem('moviesSearch'))
