@@ -5,7 +5,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import NoResults from "../NoResults/NoResults";
 
-import {filterMovies, filterShortMovies} from '../../utils/helpers';
+import { filterMovies, filterShortMovies } from '../../utils/helpers';
 import moviesApi from "../../utils/MoviesApi";
 
 import './Movies.css';
@@ -55,6 +55,7 @@ function Movies(props) {
       if (shortMoviesStatus) {
         fillMovies(shortMovies);
       } else {
+        console.log(foundMovies);
         fillMovies(foundMovies);
       }
     }
@@ -66,6 +67,7 @@ function Movies(props) {
       setMoviesLastResults([]);
       localStorage.setItem('moviesLastResults', JSON.stringify([]));
     } else {
+      setNotFound(false);
       setMoviesLastResults(movies);
       localStorage.setItem('moviesLastResults', JSON.stringify(movies));
     }
@@ -116,7 +118,7 @@ function Movies(props) {
         <>
           { isProcessing && <Preloader /> }
 
-          { notFound || moviesLastResults.length === 0
+          { notFound || moviesLastResults.length === 0 && JSON.parse(localStorage.getItem('movies'))
             ? <NoResults />
             : <MoviesCardList
                 movies={moviesLastResults}

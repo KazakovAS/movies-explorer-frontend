@@ -13,42 +13,74 @@ function SavedMovies(props) {
 
   const [ notFound, setNotFound ] = useState(false);
   const [ shortMoviesStatus, setShortMoviesStatus ] = useState(false);
-  const [ moviesResults, setMoviesResults ] = useState([]);
+  const [ defaultSearch, setDefaultSearch ] = useState(true);
+  const [ moviesLikedLastResults, setMoviesLikedLastResults ] = useState(savedMovies);
+  const [ foundMoviesLiked, setFoundMoviesLiked ] = useState([]);
+  const [ foundShortMoviesLiked, setFoundShortMoviesLiked ] = useState([]);
 
   function handleShortFilms() {
     setShortMoviesStatus(!shortMoviesStatus);
-    localStorage.setItem('shortMoviesLikedStatus', JSON.stringify(!shortMoviesStatus));
 
-    handleSetMovies(!shortMoviesStatus, localStorage.getItem('movieSearch'));
+    const Temp = !shortMoviesStatus;
+
+    selectMoviesForFill(foundMoviesLiked, foundShortMoviesLiked, Temp);
   }
 
-  function handleSetMovies(shortMoviesStatus, userRequest) {
-    let result;
-    const foundMovies = filterMovies(savedMovies, userRequest);
-    const foundShortMovie = filterShortMovies(foundMovies);
-
-    setNotFound(false);
-
-    if (foundMovies.length === 0 || (shortMoviesStatus && foundShortMovie.length === 0)) {
-      setNotFound(true);
+  function selectMoviesForFill(foundShortMoviesLiked, shortMoviesLiked, shortMoviesStatus) {
+    if (defaultSearch) {
+      if (shortMoviesStatus) {
+        fillMovies(filterShortMovies(savedMovies));
+      } else {
+        fillMovies(savedMovies);
+      }
 
       return;
     }
 
-    result = shortMoviesStatus ? filterShortMovies(foundMovies) : foundMovies;
-    setMoviesResults(result);
-    localStorage.setItem('moviesLikedResults', JSON.stringify(result));
+    if (shortMoviesStatus) {
+      fillMovies(shortMoviesLiked);
+    } else {
+      fillMovies(foundShortMoviesLiked);
+    }
+  }
+
+  function fillMovies(movies) {
+    if (movies.length === 0) {
+      setNotFound(true);
+      setMoviesLikedLastResults([]);
+    } else {
+      setNotFound(false);
+      setMoviesLikedLastResults(movies);
+    }
+  }
+
+  function handleFindShortMovies(movies) {
+    return filterShortMovies(movies);
+  }
+
+  function handleFindMovies(movies, userRequest) {
+    return filterMovies(movies, userRequest);
+  }
+
+  function handleSetMovies(movies, userRequest) {
+    setNotFound(false);
+
+    const foundMoviesLiked = handleFindMovies(movies, userRequest);
+    const foundShortMoviesLiked = handleFindShortMovies(foundMoviesLiked);
+
+    setFoundMoviesLiked(foundMoviesLiked)
+    setFoundShortMoviesLiked(foundShortMoviesLiked)
+    setDefaultSearch(false);
+
+    selectMoviesForFill(foundMoviesLiked, foundShortMoviesLiked, shortMoviesStatus);
   }
 
   function handleSearchForm(userRequest) {
-    handleSetMovies(shortMoviesStatus, userRequest);
+    handleSetMovies(savedMovies, userRequest);
   }
 
   useEffect(() => {
-    const shortMovies = localStorage.getItem('shortMoviesLikedStatus');
-
-    setMoviesResults(savedMovies);
-    if (shortMovies) setShortMoviesStatus(JSON.parse(shortMovies));
+    setMoviesLikedLastResults(savedMovies);
   }, [savedMovies]);
 
   return (
@@ -64,10 +96,10 @@ function SavedMovies(props) {
         <>
           { isProcessing && <Preloader /> }
 
-          { notFound
+          { notFound || moviesLikedLastResults.length === 0 && !savedMovies
             ? <NoResults />
             : <MoviesCardList
-              movies={moviesResults}
+              movies={moviesLikedLastResults}
               savedMovies={savedMovies}
               handleDeleteMovie={handleDeleteMovie}
             />
