@@ -13,7 +13,6 @@ function SavedMovies(props) {
 
   const [ notFound, setNotFound ] = useState(false);
   const [ shortMoviesStatus, setShortMoviesStatus ] = useState(false);
-  const [ defaultSearch, setDefaultSearch ] = useState(true);
   const [ moviesLikedLastResults, setMoviesLikedLastResults ] = useState(savedMovies);
   const [ foundMoviesLiked, setFoundMoviesLiked ] = useState([]);
   const [ foundShortMoviesLiked, setFoundShortMoviesLiked ] = useState([]);
@@ -26,8 +25,10 @@ function SavedMovies(props) {
     selectMoviesForFill(foundMoviesLiked, foundShortMoviesLiked, Temp);
   }
 
-  function selectMoviesForFill(foundShortMoviesLiked, shortMoviesLiked, shortMoviesStatus) {
-    if (defaultSearch) {
+  function selectMoviesForFill(foundShortMoviesLiked, shortMoviesLiked, shortMoviesStatus ) {
+    const defaultLikedSearch = localStorage.getItem('defaultLikedSearch');
+
+    if (defaultLikedSearch === 'true') {
       if (shortMoviesStatus) {
         fillMovies(filterShortMovies(savedMovies));
       } else {
@@ -64,23 +65,23 @@ function SavedMovies(props) {
 
   function handleSetMovies(movies, userRequest) {
     setNotFound(false);
-
     const foundMoviesLiked = handleFindMovies(movies, userRequest);
     const foundShortMoviesLiked = handleFindShortMovies(foundMoviesLiked);
 
     setFoundMoviesLiked(foundMoviesLiked)
     setFoundShortMoviesLiked(foundShortMoviesLiked)
-    setDefaultSearch(false);
 
     selectMoviesForFill(foundMoviesLiked, foundShortMoviesLiked, shortMoviesStatus);
   }
 
   function handleSearchForm(userRequest) {
+    localStorage.setItem('defaultLikedSearch', JSON.stringify(false));
     handleSetMovies(savedMovies, userRequest);
   }
 
   useEffect(() => {
     setMoviesLikedLastResults(savedMovies);
+    localStorage.setItem('defaultLikedSearch', JSON.stringify(true));
   }, [savedMovies]);
 
   return (
