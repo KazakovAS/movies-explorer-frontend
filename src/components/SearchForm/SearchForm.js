@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import {useEffect} from 'react';
+import {useForm} from 'react-hook-form';
 
 import Form from "../Form/Form";
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
@@ -8,18 +8,16 @@ import validations from '../../utils/validations';
 import './SearchForm.css';
 
 function SearchForm(props) {
-  const { handleSearchForm, shortMoviesStatus, handleShortFilms, isProcessing, serverResponse } = props;
+  const { handleSearchForm, shortMoviesStatus, handleShortFilms, isProcessing } = props;
 
   const {
     register,
     formState: {
       errors,
-      isValid,
     },
     watch,
     setValue,
     handleSubmit,
-    // reset,
   } = useForm({
     mode: 'onSubmit',
   });
@@ -32,14 +30,13 @@ function SearchForm(props) {
     handleSearchForm(movieName);
 
     localStorage.setItem('movieSearch', movieName);
-    // reset();
   }
 
   useEffect(() => {
     const saveValue = localStorage.getItem('movieSearch');
 
-    if (saveValue) {
-      setValue('movie', saveValue);
+    if (location.pathname === '/movies' && saveValue) {
+      setValue('movie', localStorage.getItem('moviesSearch'))
     }
   }, []);
 
@@ -55,7 +52,6 @@ function SearchForm(props) {
           })}
           className="search-form__field"
           placeholder="Фильм"
-          required
         />
 
         <button
