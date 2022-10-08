@@ -67,7 +67,7 @@ class MainApi extends Api {
         trailerLink,
         nameRU,
         nameEN,
-        thumbnail: `${MOVIES_IMAGES}${image.formats.thumbnail.url}`,
+        thumbnail: `${MOVIES_IMAGES}${image?.formats?.thumbnail?.url}`,
         movieId: Number(id),
       })
     })

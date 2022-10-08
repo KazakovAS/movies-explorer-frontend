@@ -16,7 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import auth from "../../utils/auth";
 import mainApi from "../../utils/MainApi";
-import { normalizeMovie } from "../../utils/helpers";
+import { normalizeData } from "../../utils/helpers";
 
 function App() {
   const history = useHistory();
@@ -99,9 +99,7 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
-    // console.log(`movie`, movie)
-    // const normalizedMovie = normalizeMovie(movie);
-    // console.log(normalizedMovie);
+    // const normalizedMovie = normalizeData(movie);
 
     mainApi.saveMovie(movie)
       .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))

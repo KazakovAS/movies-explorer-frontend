@@ -55,7 +55,6 @@ function Movies(props) {
       if (shortMoviesStatus) {
         fillMovies(shortMovies);
       } else {
-        console.log(foundMovies);
         fillMovies(foundMovies);
       }
     }
