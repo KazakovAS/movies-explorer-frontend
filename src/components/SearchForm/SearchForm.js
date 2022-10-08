@@ -52,6 +52,7 @@ function SearchForm(props) {
         <input
           {...register('movie', {
             required: movieRules.required,
+            minLength: movieRules.minLength,
           })}
           className="search-form__field"
           placeholder="Фильм"
@@ -63,6 +64,8 @@ function SearchForm(props) {
           aria-label="Найти"
           disabled={ !isValid || isProcessing }
         />
+
+        { !isValid && <span className="form__error search-form__error">123</span> }
       </div>
 
       <FilterCheckbox
