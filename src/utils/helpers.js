@@ -12,6 +12,7 @@ function convertingTime(time, format = 'en') {
 }
 
 function filterMovies(movies, userRequest) {
+  console.log(movies)
   return movies.filter(movie => {
     const userMovie = userRequest.toLowerCase().trim();
 

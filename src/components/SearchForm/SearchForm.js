@@ -27,19 +27,20 @@ function SearchForm(props) {
   } = validations;
 
   function onSubmit() {
-    handleSearchForm(movieName);
+    const inputValue = document.getElementById('search-input').value;
 
     if (location.pathname === '/movies') {
-      localStorage.setItem('moviesSearch', movieName);
+      localStorage.setItem('moviesSearch', JSON.stringify(inputValue));
     }
 
+    handleSearchForm(movieName);
   }
 
   useEffect(() => {
     const saveValue = localStorage.getItem('moviesSearch');
 
     if (location.pathname === '/movies' && saveValue) {
-      setValue('movie', localStorage.getItem('moviesSearch'))
+      setValue('movie', JSON.parse(localStorage.getItem('moviesSearch')));
     }
   }, []);
 
@@ -54,6 +55,7 @@ function SearchForm(props) {
             required: movieRules.required
           })}
           className="search-form__field"
+          id="search-input"
           placeholder="Фильм"
         />
 
