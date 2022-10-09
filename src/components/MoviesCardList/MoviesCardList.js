@@ -46,7 +46,6 @@ function MoviesCardList(props) {
        ? defaultCards = movies.filter((item, i) => i < amountCards.total)
        : defaultCards = movies;
 
-      console.log(defaultCards)
       setShownMovies(defaultCards);
     }
   }, [movies, amountCards.total]);

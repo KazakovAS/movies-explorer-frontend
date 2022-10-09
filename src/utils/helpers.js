@@ -63,8 +63,6 @@ const normalizeData = (data) => {
     obj[key] = value;
   });
 
-  console.log(obj)
-
   return obj;
 }
 
