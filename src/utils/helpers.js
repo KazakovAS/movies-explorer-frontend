@@ -1,4 +1,4 @@
-import {MOVIES_IMAGES, SHORT_MOVIES_DURATION} from './constants.js';
+import { SHORT_MOVIES_DURATION } from './constants.js';
 
 function convertingTime(time, format = 'en') {
   const hours = Math.trunc(time/60);
@@ -41,46 +41,29 @@ const normalizeData = (data) => {
     duration: { check: (duration) => Number, defaultValue: ''},
     id: { check: (id) => Number, defaultValue: ''},
     image: { check: (image) => Object, defaultValue: { url: 'https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png?w=681&h=383&crop=1' }},
-    nameEN: { check: (nameEN) => /^[-?!,&*:—.A-Za-z0-9\\s]+$/, defaultValue: 'h'},
+    nameEN: { check: (nameEN) => { return Boolean(nameEN) }, defaultValue: ''},
     nameRU: { check: (nameRU) => String, defaultValue: ''},
-    trailerLink: { check: (trailerLink) => /^\//.test(value), defaultValue: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+    trailerLink: { check: (trailerLink) => String, defaultValue: ''},
     updated_at: { check: (updated_at) => String, defaultValue: ''},
     year: { check: (year) => String, defaultValue: ''},
     thumbnail: { check: (image) => Object, defaultValue: null},
   };
 
+  const obj = {};
+
   const normalizedData = Object.entries(data).map(([key, value]) => {
-    if (checker[key].check(value)) {
-      console.log(value)
-      return value;
+    if (key === 'nameEN' && !value.match(/^[-?!,&*:—.A-Za-z0-9\\s]+$/)) {
+      value = 'null';
     }
 
-    return defaultValue;
+    if (key === 'trailerLink' && !value.match(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi)) {
+      value = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    }
+
+    obj[key] = value;
   });
 
-  let newObj = {};
-  const ObjKeys = Object.keys(checker);
-
-  for (let i = 0; i < ObjKeys.length; i++) {
-    newObj[ObjKeys[i]] = normalizedData[i];
-  }
-
-  console.log(newObj)
-  return newObj;
+  return obj;
 }
-
-// const normalizeData = (data) => {
-//   const checker = {
-//     nameRU: { check: (name) => Boolean, defaultValue: ''},
-//   };
-//
-//   const normalizedData = Object.entries(data).map(([key, value]) => {
-//     if (checker[key].check(value)) {
-//       return value;
-//     }
-//
-//     return defaultValue;
-//   })
-// }
 
 export { convertingTime, filterMovies, normalizeData, filterShortMovies };

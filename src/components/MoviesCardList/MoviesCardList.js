@@ -31,18 +31,20 @@ function MoviesCardList(props) {
   }
 
   useEffect(() => {
-    // if (location.pathname === '/movies') {
-      screenWidth >= tablet.width
-        ? setAmountCards(tablet.cards)
-        : setAmountCards(mobile.cards);
+    screenWidth >= tablet.width
+      ? setAmountCards(tablet.cards)
+      : setAmountCards(mobile.cards);
 
-      return () => setIsMount(false);
-    // }
+    return () => setIsMount(false);
   }, [screenWidth, isMount, tablet, mobile]);
 
   useEffect(() => {
     if (movies.length) {
-      const defaultCards = movies.filter((item, i) => i < amountCards.total);
+      let defaultCards;
+
+      location.pathname === '/movies'
+       ? defaultCards = movies.filter((item, i) => i < amountCards.total)
+       : defaultCards = movies;
 
       setShownMovies(defaultCards);
     }

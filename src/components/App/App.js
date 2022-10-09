@@ -99,9 +99,9 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
-    // const normalizedMovie = normalizeData(movie);
+    const normalizedMovie = normalizeData(movie);
 
-    mainApi.saveMovie(movie)
+    mainApi.saveMovie(normalizedMovie)
       .then(newMovie => setSavedMovies([newMovie, ...savedMovies]))
       .catch(console.error);
   }
