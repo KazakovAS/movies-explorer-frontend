@@ -36,7 +36,7 @@
   font-weight: 500;
   font-size: 10px;
   line-height: 16px;
-  color: #FFFFFF;
+  color: #000000;
   text-decoration: none;
   transition: opacity 1s;
 }
@@ -47,6 +47,10 @@
 
 .header__auth-link:not(:first-child) {
   margin-left: 14px;
+}
+
+.header__auth-link_theme_dark {
+  color: #FFFFFF;
 }
 
 .header__auth-link_type_button {
@@ -64,6 +68,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-color: transparent;
+  cursor: pointer;
   border: none;
   padding: 0;
 }

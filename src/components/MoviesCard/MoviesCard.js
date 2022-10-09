@@ -1,22 +1,66 @@
-import './MoviesCard.css';
-import preview from '../../images/movie-card.jpg';
+import { MOVIES_IMAGES } from '../../utils/constants';
+import { convertingTime } from '../../utils/helpers';
 
-function MoviesCard() {
+import './MoviesCard.css';
+
+function MoviesCard(props) {
+  const { movie, saved, handleSaveMovie, handleDeleteMovie } = props;
+  const { nameRU, image, duration, trailerLink, owner } = movie;
+
+  function onLike() {
+    handleSaveMovie(movie);
+  }
+
+  function onDelete() {
+    handleDeleteMovie(movie);
+  }
+
   return (
     <article className="movies-card">
       <picture className="movies-card__preview">
-        <img className="movies-card__preview-image" src={preview} alt="Фотограф на фоне машин" />
+        <img
+          className="movies-card__preview-image"
+          src={movie.image.url ? `${MOVIES_IMAGES}${image.url}` : movie.image}
+          alt={nameRU}
+        />
       </picture>
 
       <div className="movies-card__content">
         <div className="movies-card__description">
-          <h2 className="movies-card__title">33 слова о дизайне</h2>
-          <time className="movies-card__duration" dateTime="1h 42m">1ч 42м</time>
+          <h2 className="movies-card__title">
+            <a
+              href={`${trailerLink}`}
+              className="movies-card__link"
+              target="_blank"
+              rel="nofollow noreferrer"
+            >
+              { nameRU }
+            </a>
+          </h2>
+          <time className="movies-card__duration" dateTime={convertingTime(duration, 'en')}>{convertingTime(duration, 'ru')}</time>
         </div>
 
-        {/*<button className="movies-card__button movies-card__button_type_default" type="button" />*/}
-        <button className="movies-card__button movies-card__button_type_liked" type="button" />
-        {/*<button className="movies-card__button movies-card__button_type_delete" type="button" />*/}
+        {location.pathname === '/movies' && (
+          <button
+            className={`movies-card__button movies-card__button_type_${
+              saved ? 'liked' : 'default'
+            }`}
+            aria-label={`${
+              saved ? 'Удалить фильм из сохранённых' : 'Сохранить фильм'
+            }`}
+            type="button"
+            onClick={saved ? onDelete : onLike}
+          />
+        )}
+
+        {location.pathname === '/saved-movies' && (
+          <button
+            className="movies-card__button movies-card__button_type_delete"
+            aria-label="Удалить фильм"
+            type="button"
+            onClick={onDelete}
+          />
+        )}
       </div>
     </article>
   );

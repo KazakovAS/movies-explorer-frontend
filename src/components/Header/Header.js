@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import Logo from '../Logo/Logo';
 import Navigation from "../Navigation/Navigation";
 import Account from "../Account/Account";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import './Header.css';
 
 function Header(props) {
   const { theme } = props;
 
-  const [loggedIn] = useState(true);
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [ isMenuOpen, setMenuOpen ] = useState(false);
+  const { loggedIn } = useContext(AuthContext);
 
   function openMenu() {
     setMenuOpen(!isMenuOpen);
@@ -72,9 +73,9 @@ function Header(props) {
           aria-hidden="true"
           focusable="false"
         >
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M36 14L8 14V11L36 11V14Z" />
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M36 24L8 24V21L36 21V24Z" />
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M36 34L8 34V31L36 31V34Z" />
+          <path fillRule="evenodd" clipRule="evenodd" d="M36 14L8 14V11L36 11V14Z" />
+          <path fillRule="evenodd" clipRule="evenodd" d="M36 24L8 24V21L36 21V24Z" />
+          <path fillRule="evenodd" clipRule="evenodd" d="M36 34L8 34V31L36 31V34Z" />
         </svg>
       </button>
 
@@ -84,7 +85,7 @@ function Header(props) {
 
   const headerNotLogged = (
     <div className="header__auth">
-      <Link to="/signup" className="header__auth-link">
+      <Link to="/signup" className={`header__auth-link ${ theme === 'blue' ? 'header__auth-link_theme_dark' : ''}`}>
         Регистрация
       </Link>
       <Link to="/signin" className="header__auth-link header__auth-link_type_button">
@@ -101,7 +102,7 @@ function Header(props) {
             <Logo />
           </Link>
 
-          {loggedIn ? headerLoggedIn : headerNotLogged}
+          { loggedIn ? headerLoggedIn : headerNotLogged }
         </div>
       </header>
     </>

@@ -1,31 +1,26 @@
-import './Profile.css';
+import { useContext } from "react";
 
-function Profile() {
+import FormProfile from '../FormProfile/FormProfile';
+
+import './Profile.css';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+
+function Profile(props) {
+  const { handleEditProfile, handleSignOut, isProcessing, serverResponse } = props;
+
+  const { currentUser } = useContext(CurrentUserContext);
+
   return (
     <section className="profile">
       <div className="profile__wrapper">
-        <h1 className="profile__header">Привет, Виталий!</h1>
+        <h1 className="profile__header">Привет, { currentUser.name }!</h1>
 
-        <dl className="profile__info">
-          <div className="profile__item">
-            <dt className="profile__term">Имя</dt>
-            <dd className="profile__details">Виталий</dd>
-          </div>
-          <div className="profile__item">
-            <dt className="profile__term">E-mail</dt>
-            <dd className="profile__details">pochta@yandex.ru</dd>
-          </div>
-        </dl>
-
-        <div className="profile__controls controls-profile">
-          <button className="controls-profile__item">
-            Редактировать
-          </button>
-
-          <button className="controls-profile__item controls-profile__item_type_logout">
-            Выйти из аккаунта
-          </button>
-        </div>
+        <FormProfile
+          handleEditProfile={handleEditProfile}
+          handleSignOut={handleSignOut}
+          isProcessing={isProcessing}
+          serverResponse={serverResponse}
+        />
       </div>
     </section>
   );

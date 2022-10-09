@@ -1,21 +1,12 @@
-import { Link } from 'react-router-dom';
-
 import './Form.css';
 
 function Form(props) {
-  const { submit, cta, link, children } = props;
+  const { onSubmit, children, className = '' } = props;
 
   return (
     <>
-      <form className="form" action="">
+      <form className={`form ${className}`} onSubmit={onSubmit} noValidate>
         { children }
-
-        <button className="form__submit">{ submit }</button>
-
-        <p className="form__cta">
-          { cta }
-          <Link href={ link.url } className="form__cta-link">{ link.text }</Link>
-        </p>
       </form>
     </>
   );

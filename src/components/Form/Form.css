@@ -69,8 +69,14 @@
   cursor: pointer;
 }
 
-.form__submit:hover {
+.form__submit:not(:disabled):hover {
   opacity: .6;
+}
+
+.form__submit:disabled {
+  background-color: #EBEBEB;
+  color: #000000;
+  cursor: default;
 }
 
 .form__cta {
@@ -91,6 +97,56 @@
 
 .form__cta-link:hover {
   opacity: .6;
+}
+
+.form__controls {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+
+.form__controls-item {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 1s;
+}
+
+.form__controls-item:not(:disabled):hover {
+  opacity: .6;
+}
+
+.form__controls-item:not(:first-child) {
+  margin-top: 16px;
+}
+
+.form__controls-item:disabled {
+  cursor: default;
+}
+
+.form__controls-item_type_logout {
+  color: #EE3465;
+  font-weight: 500;
+}
+
+.form__server-response {
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form__server-response_type_complete {
+  color: #2BE080;
+}
+
+.form__server-response_type_error {
+  color: #EE3465;
 }
 
 @media (min-width: 768px) {

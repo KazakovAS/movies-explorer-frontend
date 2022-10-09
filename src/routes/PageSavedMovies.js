@@ -3,12 +3,19 @@ import Content from '../components/Content/Content';
 import SavedMovies from '../components/SavedMovies/SavedMovies';
 import Footer from '../components/Footer/Footer';
 
-function PageSavedMovies() {
+function PageSavedMovies(props) {
+  const { savedMovies, handleDeleteMovie, isProcessing, serverResponse } = props;
+
   return (
     <>
       <Header />
       <Content>
-        <SavedMovies />
+        <SavedMovies
+          savedMovies={savedMovies}
+          handleDeleteMovie={handleDeleteMovie}
+          isProcessing={isProcessing}
+          serverResponse={serverResponse}
+        />
       </Content>
       <Footer />
     </>
